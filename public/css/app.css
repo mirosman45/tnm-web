@@ -1,0 +1,390 @@
+/* ================= ROOT TOKENS ================= */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #e0e7ff;
+
+    --surface: #ffffff;
+    --background: #f8fafc;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+
+    --radius: 12px;
+    --transition: .3s ease;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
+    --shadow-md: 0 6px 16px rgba(0, 0, 0, .12);
+    --shadow-xl: 0 18px 40px rgba(0, 0, 0, .18);
+}
+
+/* ================= DARK MODE ================= */
+[data-theme="dark"] {
+    --surface: #0f172a;
+    --background: #020617;
+    --text: #e5e7eb;
+    --text-muted: #94a3b8;
+    --border: #1e293b;
+
+    --primary: #818cf8;
+    --primary-dark: #6366f1;
+    --primary-light: rgba(99, 102, 241, .18);
+
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .6);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, .7);
+    --shadow-xl: 0 30px 60px rgba(0, 0, 0, .85);
+}
+
+/* ================= RESET ================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ================= LAYOUT ================= */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+/* ================= HEADER BUTTONS ================= */
+.header-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.header-buttons a,
+.header-buttons button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background var(--transition);
+    float: right;
+}
+
+.header-buttons a:hover,
+.header-buttons button:hover {
+    background: var(--primary-dark);
+}
+
+/* ================= GRID ================= */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* ================= NEWS CARD ================= */
+.news-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.news-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ================= IMAGE ================= */
+.news-image {
+    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    background: var(--background);
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform .4s ease, filter .4s ease;
+}
+
+/* Hover zoom */
+.news-card:hover .news-image img {
+    transform: scale(1.03);
+    filter: brightness(1.05);
+}
+
+/* ================= NEWS DETAIL ================= */
+.news-detail-image {
+    max-width: 400px;
+    max-height: 400px;
+    margin: 2rem auto;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--background);
+}
+
+.news-detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ================= CONTENT ================= */
+.news-content {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.news-content .date {
+    font-size: .8rem;
+    color: var(--text-muted);
+    margin-bottom: .4rem;
+}
+
+.news-content h3,
+.news-content h1 {
+    font-size: 1.2rem;
+    margin: 0 0 .6rem;
+}
+
+.news-content p {
+    flex: 1;
+    font-size: .95rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+/* ================= BUTTONS ================= */
+button,
+input[type="submit"] {
+    cursor: pointer;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background var(--transition);
+    float: right;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: var(--primary-dark);
+}
+
+/* ================= COMMENTS & LIKE/DISLIKE ================= */
+.comment-section {
+    max-width: 400px;
+    margin: 1rem auto;
+    font-size: 0.9rem;
+}
+
+.comment-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.comment-section button {
+    width: auto;
+    align-self: flex-end;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.85rem;
+}
+
+.comment {
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+/* ================= ADMIN DASHBOARD ================= */
+.admin-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.admin-card {
+    background: var(--primary-light);
+    color: var(--text);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--primary);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ================= FORMS ================= */
+form input,
+form select,
+form textarea,
+form button {
+    width: 100%;
+    padding: .65rem .9rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: .9rem;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .2);
+}
+
+/* ================= FOOTER ================= */
+footer {
+    margin-top: 4rem;
+    padding: 2.5rem 0;
+    text-align: center;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .news-image {
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .news-detail-image {
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .news-content {
+        padding: 1rem;
+    }
+
+    .header-buttons {
+        justify-content: center;
+        float: none;
+    }
+
+    .comment-section {
+        max-width: 300px;
+    }
+}
+.auth-container {
+    max-width: 400px;
+    margin: 4rem auto;
+    padding: 2rem 2.5rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #111827;
+}
+
+.auth-errors {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.auth-errors ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+}
+
+.auth-actions {
+    text-align: right;
+}
+
+.auth-btn {
+    background: #6366f1;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.65rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-btn:hover {
+    background: #4f46e5;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.auth-footer .auth-link {
+    color: #6366f1;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.auth-footer .auth-link:hover {
+    text-decoration: underline;
+}
