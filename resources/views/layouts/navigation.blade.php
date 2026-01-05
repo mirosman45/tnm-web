@@ -29,7 +29,7 @@
                     </a>
 
                     <a href="{{ route('register') }}"
-                        class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700">
+                        class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-indigo-500">
                         Sign up
                     </a>
                 @endguest

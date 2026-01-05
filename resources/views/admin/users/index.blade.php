@@ -1,17 +1,17 @@
 @extends('admin.layout')
 
 @section('content')
-    <h1>Users Management</h1>
+    <h1>{{ __('messages.manage_users') }}</h1>
 
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>{{ __('messages.name') }}</th>
+                <th>{{ __('messages.email') }}</th>
+                <th>{{ __('messages.role') }}</th>
+                <th>{{ __('messages.status') }}</th>
+                <th>{{ __('messages.actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +25,9 @@
                             @csrf
                             @method('PUT')
                             <select name="role" onchange="this.form.submit()">
-                                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                                <option value="editor" {{ $user->role == 'editor' ? 'selected' : '' }}>Editor</option>
-                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>{{ __('messages.user') }}</option>
+                                <option value="editor" {{ $user->role == 'editor' ? 'selected' : '' }}>{{ __('messages.editor') }}</option>
+                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>{{ __('messages.admin') }}</option>
                             </select>
                         </form>
                     </td>
@@ -35,14 +35,14 @@
                         <form action="{{ route('admin.users.toggleStatus', $user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <button type="submit">{{ $user->blocked ? 'Blocked' : 'Active' }}</button>
+                            <button type="submit">{{ $user->blocked ? __('messages.blocked') : __('messages.active') }}</button>
                         </form>
                     </td>
                     <td>
                         <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Delete this user?')">Delete</button>
+                            <button type="submit" onclick="return confirm('{{ __('messages.confirm_delete_user') }}')">{{ __('messages.delete') }}</button>
                         </form>
                     </td>
                 </tr>

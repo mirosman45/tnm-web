@@ -34,8 +34,13 @@ Route::get('/news-of-the-week', [NewsViewController::class, 'week'])->name('news
 | LANGUAGE SWITCH
 |--------------------------------------------------------------------------
 */
-Route::post('/change-language', [LanguageController::class, 'change'])
-    ->name('change.language');
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ps', 'fa'])) {
+        session(['locale' => $locale]);
+        app()->setLocale($locale);
+    }
+    return back();
+})->name('lang.switch');
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +68,10 @@ Route::middleware(['auth', AdminMiddleware::class])
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
         Route::put('/users/{id}/toggle-status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
         Route::put('/users/{id}/change-role', [AdminController::class, 'changeRole'])->name('users.changeRole');
+
+        // Books Management
+        Route::post('/books/store', [AdminController::class, 'storeBook'])->name('books.store');
+        Route::delete('/books/{id}', [AdminController::class, 'destroyBook'])->name('books.destroy');
 
         // News Management
         Route::prefix('news')->name('news.')->group(function () {
@@ -112,4 +121,14 @@ Route::get('/dashboard', function () {
 
     return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
+
+use App\Http\Controllers\BookController;
+
+// Books - Public routes (anyone can view and search)
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+
+// Books - Download route (auth required)
+Route::middleware('auth')->group(function () {
+    Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
+});
 

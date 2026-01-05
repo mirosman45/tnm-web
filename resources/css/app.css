@@ -1,8 +1,14 @@
 /* ================= ROOT TOKENS ================= */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #e0e7ff;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
+    --secondary: #7c3aed;
+    --secondary-dark: #6d28d9;
+    --accent: #ec4899;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
 
     --surface: #ffffff;
     --background: #f8fafc;
@@ -19,15 +25,15 @@
 
 /* ================= DARK MODE ================= */
 [data-theme="dark"] {
-    --surface: #0f172a;
-    --background: #020617;
-    --text: #e5e7eb;
-    --text-muted: #94a3b8;
-    --border: #1e293b;
+    --surface: #1e293b;
+    --background: #0f172a;
+    --text: #f1f5f9;
+    --text-muted: #cbd5e1;
+    --border: #334155;
 
-    --primary: #818cf8;
-    --primary-dark: #6366f1;
-    --primary-light: rgba(99, 102, 241, .18);
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: rgba(59, 130, 246, .2);
 }
 
 /* ================= RESET ================= */
@@ -48,19 +54,90 @@ body {
 
 /* ================= BUTTONS ================= */
 button,
-input[type="submit"] {
+input[type="submit"],
+.btn,
+a.btn {
     cursor: pointer;
     border: none;
     border-radius: var(--radius);
     background: var(--primary);
-    color: #fff;
+    color: #fff !important;
     font-weight: 600;
-    padding: 0.45rem 1rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+    transition: all var(--transition);
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: var(--shadow-md);
 }
 
 button:hover,
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+.btn:hover,
+a.btn:hover {
     background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Primary button (Login & Sign Up) */
+.btn-primary {
+    background: var(--primary);
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+/* Button variants */
+.btn-secondary {
+    background: var(--secondary);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary-dark);
+}
+
+.btn-success {
+    background: var(--success);
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn-danger {
+    background: var(--danger);
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-warning {
+    background: var(--warning);
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary-light);
+}
+
+.btn-small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
 }
 
 /* ================= AUTH FORMS ================= */
@@ -82,80 +159,98 @@ input[type="submit"]:hover {
 }
 
 /* ================= LIKE / DISLIKE ================= */
-.like-buttons {
+.like-buttons,
+.news-likes {
     display: flex;
-    gap: 0.4rem;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-}
-
-.like-buttons button {
-    padding: 0.25rem 0.6rem;
-    font-size: 0.75rem;
-    border-radius: 6px;
-    background: var(--primary-light);
-    color: var(--primary-dark);
-    border: 1px solid var(--primary);
-}
-
-/* ================================================= */
-/* ================= NEWS IMAGES FIX ================= */
-/* ================================================= */
-
-/* News LIST image (small preview) */
-.news-image {
-    width: 300px;
-    height: 200px;
-    margin: 1rem auto;
-    overflow: hidden;
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
+    gap: 1rem;
     justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
-.news-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-}
-
-/* 🔥 NEWS DETAIL IMAGE — HARD LIMITED */
-.news-detail-image {
-    width: 500px;
-    height: 500px;
-    max-width: 500px;
-    max-height: 500px;
-    margin: 2rem auto;
-    overflow: hidden;
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
+.like-buttons button,
+.news-likes button {
+    padding: 0.65rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 25px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition);
     box-shadow: var(--shadow-md);
 }
 
-/* IMAGE CAN NEVER EXCEED 500x500 */
-.news-detail-image img {
-    max-width: 500px;
-    max-height: 500px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+.like-buttons button:hover,
+.news-likes button:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-xl);
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-    .news-detail-image {
-        width: 300px;
-        height: 300px;
-        max-width: 300px;
-        max-height: 300px;
-    }
+.news-likes button[name="is_like"] {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
 
-    .news-detail-image img {
-        max-width: 300px;
-        max-height: 300px;
+/* ================= NEWS ================= */
+.news-section {
+    margin-bottom: 50px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
     }
+}
+
+/* BOOK BUTTONS */
+.auth-btn {
+    display: inline-block;
+    padding: 0.65rem 1.25rem;
+    border-radius: 25px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.auth-btn.secondary {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+}
+
+.logout-btn {
+    padding: 0.65rem 1.25rem;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.logout-btn.danger {
+    background: transparent;
+    color: var(--danger);
+    border: 2px solid var(--danger);
+}
+
+.logout-btn.danger:hover {
+    background: var(--danger);
+    color: #fff;
+    transform: translateY(-2px);
 }

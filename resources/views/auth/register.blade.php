@@ -65,7 +65,7 @@
         }
 
         .auth-btn {
-            background: #6366f1;
+            background: #4f46e5;
             color: #fff;
             font-weight: 600;
             padding: 0.65rem 1.2rem;
@@ -76,7 +76,7 @@
         }
 
         .auth-btn:hover {
-            background: #4f46e5;
+            background: #4338ca;
         }
 
         .auth-footer {

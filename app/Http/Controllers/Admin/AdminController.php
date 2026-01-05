@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -13,7 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $books = Book::latest()->get();
+        return view('admin.dashboard', compact('books'));
     }
 
     /**
@@ -76,5 +80,42 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('error', 'Cannot change role of admin user.');
+    }
+
+    /**
+     * Store a new book (admin only)
+     */
+    public function storeBook(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'pdf' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        $pdfPath = $request->file('pdf')->store('books', 'public');
+
+        Book::create([
+            'title' => $request->title,
+            'pdf' => $pdfPath,
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Book uploaded successfully.');
+    }
+
+    /**
+     * Delete a book (admin only)
+     */
+    public function destroyBook($id)
+    {
+        $book = Book::findOrFail($id);
+
+        if (Storage::disk('public')->exists($book->pdf)) {
+            Storage::disk('public')->delete($book->pdf);
+        }
+
+        $book->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Book deleted successfully.');
     }
 }

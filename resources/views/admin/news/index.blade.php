@@ -1,42 +1,41 @@
 @extends('admin.layout')
 
 @section('content')
-    <h2>{{ ucfirst($type) }} News</h2>
+    <h2>{{ __('messages.' . $type) }} {{ __('messages.news_list') }}</h2>
 
     @if(session('success'))
         <p style="color:green">{{ session('success') }}</p>
     @endif
 
-    <a href="{{ route('admin.news.create', ['type' => $type]) }}">+ Add New</a>
+    <a href="{{ route('admin.news.create', ['type' => $type]) }}" class="btn btn-primary" style="margin-bottom: 20px; display: inline-block;">➕ {{ __('messages.add_news') }}</a>
 
-    <table border="1" cellpadding="5" cellspacing="0">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Actions</th>
-            <th>Edit</th>
-        </tr>
-        @foreach($news as $n)
+    <table>
+        <thead>
             <tr>
-                <td>{{ $n->id }}</td>
-                <td>{{ $n->title }}</td>
-                <td>{{ $n->content }}</td>
-                <td>
-                    <form method="POST" action="{{ route('admin.news.destroy', $n->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
-                </td>
-                <td>
-                    <a href="{{ route('admin.news.edit', $n->id) }}">
-                        <button>Edit</button>
-                    </a>
-
-
-
+                <th>ID</th>
+                <th>{{ __('messages.news_title') }}</th>
+                <th>{{ __('messages.news_content') }}</th>
+                <th>{{ __('messages.actions') }}</th>
             </tr>
-        @endforeach
+        </thead>
+        <tbody>
+            @foreach($news as $n)
+                <tr>
+                    <td>{{ $n->id }}</td>
+                    <td>{{ $n->title }}</td>
+                    <td>{{ Str::limit($n->content, 50) }}</td>
+                    <td style="display: flex; gap: 10px;">
+                        <a href="{{ route('admin.news.edit', $n->id) }}">
+                            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.9rem;">{{ __('messages.edit') }}</button>
+                        </a>
+                        <form method="POST" action="{{ route('admin.news.destroy', $n->id) }}" style="margin: 0;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('messages.confirm_delete') }}')" style="padding: 6px 12px; font-size: 0.9rem;">{{ __('messages.delete') }}</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 @endsection
