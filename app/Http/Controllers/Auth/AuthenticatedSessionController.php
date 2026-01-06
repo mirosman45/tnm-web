@@ -49,6 +49,16 @@ class AuthenticatedSessionController extends Controller
                 ]);
         }
 
+        // Check if user has verified their email/OTP
+        if (!$user->is_verified) {
+            Auth::logout();
+            return redirect()
+                ->route('login')
+                ->withErrors([
+                    'email' => 'You must verify your email before logging in. Please check your inbox for the OTP.',
+                ]);
+        }
+
         // Admin users → redirect to admin dashboard
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');

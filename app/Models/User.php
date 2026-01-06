@@ -21,6 +21,9 @@ class User extends Authenticatable
         'can_comment',         // permission to comment
         'can_view_old_news',   // permission to view old news
         'is_blocked',          // blocked user
+        'otp',                 // OTP code
+        'otp_expires_at',      // OTP expiry timestamp
+        'is_verified',         // email verified flag
     ];
 
     /**
@@ -29,6 +32,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'otp',
     ];
 
     /**
@@ -40,6 +44,8 @@ class User extends Authenticatable
         'can_comment' => 'boolean',
         'can_view_old_news' => 'boolean',
         'is_blocked' => 'boolean',
+        'otp_expires_at' => 'datetime',
+        'is_verified' => 'boolean',
     ];
 
     /* ---------------------------------------------
@@ -78,6 +84,11 @@ class User extends Authenticatable
     public function isBlocked(): bool
     {
         return $this->is_blocked;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->is_verified;
     }
 
     /* ---------------------------------------------

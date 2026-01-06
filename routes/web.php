@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NewsViewController;
@@ -8,6 +10,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\OtpController; // OTP Controller
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -60,8 +64,7 @@ Route::middleware(['auth', AdminMiddleware::class])
     ->group(function () {
 
         // Admin Dashboard
-        Route::get('/dashboard', [AdminController::class, 'index'])
-            ->name('dashboard');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
         // Users Management
         Route::get('/users', [AdminController::class, 'users'])->name('users');
@@ -100,18 +103,21 @@ Route::middleware(['auth', AdminMiddleware::class])
 Route::middleware('auth')->group(function () {
 
     // Comments
-    Route::post('/news/{news}/comments', [CommentController::class, 'store'])
-        ->name('comments.store');
-
-    Route::delete('/comment/{id}', [CommentController::class, 'destroy'])
-        ->name('comment.destroy');
+    Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
 
     // Likes / Dislikes
-    Route::post('/news/{news}/like', [LikeController::class, 'toggle'])
-        ->name('news.like');
-});
-use Illuminate\Support\Facades\Auth;
+    Route::post('/news/{news}/like', [LikeController::class, 'toggle'])->name('news.like');
 
+    // Books - Download route (auth required)
+    Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
+});
+
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD REDIRECT
+|--------------------------------------------------------------------------
+*/
 Route::get('/dashboard', function () {
     $user = Auth::user();
 
@@ -122,13 +128,17 @@ Route::get('/dashboard', function () {
     return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
 
-use App\Http\Controllers\BookController;
-
-// Books - Public routes (anyone can view and search)
+/*
+|--------------------------------------------------------------------------
+| BOOKS PUBLIC ROUTES
+|--------------------------------------------------------------------------
+*/
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 
-// Books - Download route (auth required)
-Route::middleware('auth')->group(function () {
-    Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
-});
-
+/*
+|--------------------------------------------------------------------------
+| OTP VERIFICATION ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
+Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
