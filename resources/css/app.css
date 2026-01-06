@@ -17,10 +17,10 @@
     --border: #e2e8f0;
 
     --radius: 12px;
-    --transition: .3s ease;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
-    --shadow-md: 0 6px 16px rgba(0, 0, 0, .12);
-    --shadow-xl: 0 18px 40px rgba(0, 0, 0, .18);
+    --transition: 0.3s ease;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
 /* ================= DARK MODE ================= */
@@ -33,7 +33,7 @@
 
     --primary: #3b82f6;
     --primary-dark: #2563eb;
-    --primary-light: rgba(59, 130, 246, .2);
+    --primary-light: rgba(59, 130, 246, 0.2);
 }
 
 /* ================= RESET ================= */
@@ -81,7 +81,7 @@ a.btn:hover {
     box-shadow: var(--shadow-xl);
 }
 
-/* Primary button (Login & Sign Up) */
+/* ================= BUTTON VARIANTS ================= */
 .btn-primary {
     background: var(--primary);
     color: #fff !important;
@@ -91,7 +91,6 @@ a.btn:hover {
     background: var(--primary-dark);
 }
 
-/* Button variants */
 .btn-secondary {
     background: var(--secondary);
 }
@@ -191,7 +190,7 @@ a.btn:hover {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-/* ================= NEWS ================= */
+/* ================= NEWS SECTION ================= */
 .news-section {
     margin-bottom: 50px;
 }
@@ -202,6 +201,47 @@ a.btn:hover {
     gap: 25px;
 }
 
+/* ================= NEWS CARD ================= */
+.news-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition);
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.news-content {
+    padding: 15px;
+}
+
+.news-content h3 {
+    margin: 0.5rem 0;
+}
+
+.news-content p.date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
 /* ================= MOBILE ================= */
 @media (max-width: 768px) {
     .grid {
@@ -209,7 +249,7 @@ a.btn:hover {
     }
 }
 
-/* BOOK BUTTONS */
+/* ================= AUTH BUTTONS ================= */
 .auth-btn {
     display: inline-block;
     padding: 0.65rem 1.25rem;
@@ -233,6 +273,7 @@ a.btn:hover {
     background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
 }
 
+/* ================= LOGOUT BUTTON ================= */
 .logout-btn {
     padding: 0.65rem 1.25rem;
     border-radius: 25px;
