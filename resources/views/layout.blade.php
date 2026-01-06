@@ -7,6 +7,32 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        :root {
+            /* CORE BACKGROUND & TEXT */
+            --background: #f5f7fb;
+            --surface: #ffffff;
+            --text: #1f2937;
+            --text-muted: #6b7280;
+
+            /* PRIMARY COLOR SYSTEM */
+            --primary: #6366f1;
+            /* Soft indigo */
+            --primary-dark: #4f46e5;
+            --primary-light: rgba(99, 102, 241, 0.25);
+
+            /* ACCENTS & STATES */
+            --danger: #ef4444;
+            --border: #e5e7eb;
+
+            /* UI FEEL */
+            --radius: 12px;
+            --transition: 0.3s ease;
+
+            /* SHADOWS (SMOOTHER & MODERN) */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
         /* RESET & BASE STYLES */
         * {
             margin: 0;
@@ -68,10 +94,10 @@
 
         /* DATETIME BADGE */
         #live-datetime {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(13, 13, 14, 0.2);
             padding: 8px 15px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.5rem;
             font-weight: 600;
             color: #fff;
             font-family: 'Courier New', monospace;
@@ -79,13 +105,13 @@
 
         /* THEME TOGGLE */
         .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(212, 186, 186, 0.2);
             border: 2px solid #fff;
             color: #fff;
-            border-radius: 50%;
-            width:  35px;
-            height: 35px;
-            font-size: 1.2rem;
+
+            width: 10px;
+            height: 10px;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all var(--transition);
             display: flex;
@@ -311,13 +337,16 @@
                 </li>
             @endguest
         </ul>
-        
+
         <select onchange="location=this.value">
-            <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}> English</option>
-            <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}> پښتو</option>
-            <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}> دری</option>
+            <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}> English
+            </option>
+            <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}> پښتو
+            </option>
+            <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}> دری
+            </option>
         </select>
-        
+
     </nav>
 
     <!-- MAIN CONTENT -->
