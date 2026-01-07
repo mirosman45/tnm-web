@@ -1,103 +1,107 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\{Request, RedirectResponse};
+use Illuminate\Support\{Facades\Auth, Facades\DB, Facades\Storage, Str};
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class BookController extends Controller
 {
-    /**
-     * Display all books with optional search.
-     */
+    /* -----------------------------------------------------------------
+     |  Admin authorisation helper
+     | ----------------------------------------------------------------- */
+    private function authorizeAdmin(): void
+    {
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            abort(403, __('messages.only_admins'));
+        }
+    }
+
+    /* -----------------------------------------------------------------
+     |  Display all books (with search)
+     | ----------------------------------------------------------------- */
     public function index(Request $request)
     {
-        $query = Book::query();
-        
-        // Search functionality
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where('title', 'like', '%' . $search . '%');
-        }
-        
-        $books = $query->latest()->get();
-        $search = $request->search ?? '';
-        
+        $search = $request->get('search', '');
+
+        $books = Book::when($search, fn($q) => $q->where('title', 'like', "%{$search}%"))
+                     ->latest()
+                     ->get();
+
         return view('books.index', compact('books', 'search'));
     }
 
-    /**
-     * Show form to upload a book (admin only)
-     */
+    /* -----------------------------------------------------------------
+     |  Show upload form
+     | ----------------------------------------------------------------- */
     public function create()
     {
-        // Check if user is authenticated and is admin
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized: Only admins can upload books');
-        }
+        $this->authorizeAdmin();
 
         return view('books.create');
     }
 
-    /**
-     * Store book (admin only)
-     */
-    public function store(Request $request)
+    /* -----------------------------------------------------------------
+     |  Store new book
+     | ----------------------------------------------------------------- */
+    public function store(Request $request): RedirectResponse
     {
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized: Only admins can upload books');
-        }
+        $this->authorizeAdmin();
 
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'pdf' => 'required|file|mimes:pdf|max:10240',
+            'pdf'   => 'required|file|mimes:pdf|max:204800', // 200 MB
         ]);
 
-        $pdfPath = $request->file('pdf')->store('books', 'public');
+        return DB::transaction(function () use ($validated, $request) {
+            $pdfPath = $request->file('pdf')->store('books', 'public');
 
-        Book::create([
-            'title' => $request->title,
-            'pdf' => $pdfPath,
-            'user_id' => Auth::id(),
-        ]);
+            Book::create([
+                'title'   => $validated['title'],
+                'pdf'     => $pdfPath,
+                'user_id' => Auth::id(),
+            ]);
 
-        return redirect()->route('books.index')->with('success', 'Book uploaded successfully.');
+            return redirect()->route('books.index')
+                             ->with('success', __('messages.book_uploaded'));
+        });
     }
 
-    /**
-     * Download book PDF
-     */
-    public function download($id)
+    /* -----------------------------------------------------------------
+     |  Download PDF
+     | ----------------------------------------------------------------- */
+    public function download(Book $book): BinaryFileResponse|RedirectResponse
     {
-        $book = Book::findOrFail($id);
-
         if (!Storage::disk('public')->exists($book->pdf)) {
-            return redirect()->back()->with('error', 'File not found.');
+            return redirect()->back()->with('error', __('messages.file_not_found'));
         }
 
-        $filename = pathinfo($book->pdf, PATHINFO_FILENAME) . '.pdf';
-        return response()->download(Storage::disk('public')->path($book->pdf), $filename);
+        $safeName = Str::slug($book->title) . '.pdf';
+
+        return response()->download(
+            Storage::disk('public')->path($book->pdf),
+            $safeName
+        );
     }
 
-    /**
-     * Delete book (admin only)
-     */
-    public function destroy($id)
+    /* -----------------------------------------------------------------
+     |  Delete book
+     | ----------------------------------------------------------------- */
+    public function destroy(Book $book): RedirectResponse
     {
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized: Only admins can delete books');
-        }
+        $this->authorizeAdmin();
 
-        $book = Book::findOrFail($id);
+        DB::transaction(function () use ($book) {
+            if (Storage::disk('public')->exists($book->pdf)) {
+                Storage::disk('public')->delete($book->pdf);
+            }
+            $book->delete();
+        });
 
-        if (Storage::disk('public')->exists($book->pdf)) {
-            Storage::disk('public')->delete($book->pdf);
-        }
-
-        $book->delete();
-
-        return redirect()->route('books.index')->with('success', 'Book deleted successfully.');
+        return redirect()->route('books.index')
+                         ->with('success', __('messages.book_deleted'));
     }
 }

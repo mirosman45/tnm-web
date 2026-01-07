@@ -113,7 +113,7 @@ return [
 
     // News Management
     'news_item' => 'مورد خبری',
-    'news_list' => 'فهرست خبرها',
+    
     'current_image' => 'تصویر فعلی',
     'editor' => 'ویراستار',
     'blocked' => 'مسدود',
@@ -121,6 +121,19 @@ return [
     'email' => 'ایمیل',
     'role' => 'نقش',
     'confirm_delete_user' => 'این کاربر را حذف کنید؟',
+
+   
+    'upload_book' => 'آپلود کتاب',
+    'book_title'  => 'عنوان کتاب',
+    'upload_pdf'  => 'آپلود فایل PDF',
+    'upload'      => 'آپلود',
+
+    'book_deleted'   => 'کتاب با موفقیت حذف شد.',
+'file_not_found' => 'فایل روی دیسک یافت نشد.',
+'book_uploaded'  => 'کتاب با موفقیت بارگذاری شد.',
+
+'only_admins' => 'فقط مدیران می‌توانند این عمل را انجام دهند.',
+
 ];
 
 

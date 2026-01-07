@@ -113,7 +113,7 @@ return [
 
     // News Management
     'news_item' => 'News Item',
-    'news_list' => 'News List',
+    
     'current_image' => 'Current Image',
     'editor' => 'Editor',
     'blocked' => 'Blocked',
@@ -121,6 +121,22 @@ return [
     'email' => 'Email',
     'role' => 'Role',
     'confirm_delete_user' => 'Delete this user?',
+
+
+ 
+    'upload_book' => 'Upload Book',
+    'book_title'  => 'Book Title',
+    'upload_pdf'  => 'Upload PDF',
+    'upload'      => 'Upload',
+
+    'book_deleted'   => 'Book deleted successfully.',
+'file_not_found' => 'File not found on disk.',
+'book_uploaded'  => 'Book uploaded successfully.',
+
+'only_admins' => 'Only administrators can perform this action.',
+
 ];
+
+
 
 

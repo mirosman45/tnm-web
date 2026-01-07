@@ -89,7 +89,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'pdf' => 'required|file|mimes:pdf|max:10240',
+            'pdf' => 'required|file|mimes:pdf|max:204800',
         ]);
 
         $pdfPath = $request->file('pdf')->store('books', 'public');

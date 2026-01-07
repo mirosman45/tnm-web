@@ -113,7 +113,7 @@ return [
 
     // News Management
     'news_item' => 'د خبر مورد',
-    'news_list' => 'د خبرونو لیست',
+
     'current_image' => 'روانه انځور',
     'editor' => 'سمونده',
     'blocked' => 'مسدود',
@@ -121,6 +121,17 @@ return [
     'email' => 'ای میل',
     'role' => 'رول',
     'confirm_delete_user' => 'دا کاروونکی حذف کړیدئ؟',
+
+    
+    'upload_book' => 'کتاب پورته کول',
+    'book_title'  => 'د کتاب عنوان',
+    'upload_pdf'  => 'PDF فایل پورته کول',
+    'upload'      => 'پورته کول',
+    'book_deleted'   => 'کتاب کامیابی سره ډیلېټ شو.',
+'file_not_found' => 'فایل په دیسک کې نشته.',
+'book_uploaded'  => 'کتاب کامیابی سره پورته شو.',
+
+'only_admins' => 'یوازې مدیران دا عملیات ترسره کولی شي.',
 ];
 
 

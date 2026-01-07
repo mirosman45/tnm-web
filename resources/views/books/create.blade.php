@@ -28,7 +28,7 @@
             <label style="display: block; margin-bottom: 8px; font-weight: bold;">{{ __('messages.upload_pdf') }}</label>
             <input type="file" name="pdf" accept="application/pdf" required 
                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; display: block;">
-            <small style="color: #666; margin-top: 5px;">Maximum file size: 10MB</small>
+            <small style="color: #666; margin-top: 5px;">Maximum file size: MB</small>
         </div>
 
         <div style="display: flex; gap: 10px;">

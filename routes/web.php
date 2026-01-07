@@ -35,7 +35,7 @@ Route::get('/news-of-the-week', [NewsViewController::class, 'week'])->name('news
 
 /*
 |--------------------------------------------------------------------------
-| LANGUAGE SWITCH
+| LANGUAGE SWITCH  (single global route)
 |--------------------------------------------------------------------------
 */
 Route::get('/lang/{locale}', function ($locale) {
@@ -85,14 +85,6 @@ Route::middleware(['auth', AdminMiddleware::class])
             Route::put('/update/{id}', [NewsController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [NewsController::class, 'destroy'])->name('destroy');
         });
-
-        // Admin Language Switch
-        Route::get('/lang/{locale}', function ($locale) {
-            if (in_array($locale, ['en', 'ps', 'fa'])) {
-                session(['locale' => $locale]);
-            }
-            return back();
-        })->name('lang');
     });
 
 /*
@@ -142,3 +134,4 @@ Route::get('/books', [BookController::class, 'index'])->name('books.index');
 */
 Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
 Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
+Route::post('books', [BookController::class, 'store'])->name('books.store');

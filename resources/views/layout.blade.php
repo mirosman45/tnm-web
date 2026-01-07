@@ -4,7 +4,9 @@
 <head>
     <title>@yield('title') - TNM News</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         :root {
@@ -403,6 +405,22 @@
         });
     </script>
 
+
+    {{-- social bar --}}
+    <div style="display: flex; gap: 1rem; margin-bottom: 30px;">
+        <a href="#" aria-label="Facebook" style="color: var(--text); font-size: 1.5rem;"><i
+                class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter" style="color: var(--text); font-size: 1.5rem;"><i
+                class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram" style="color: var(--text); font-size: 1.5rem;"><i
+                class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn" style="color: var(--text); font-size: 1.5rem;"><i
+                class="fab fa-linkedin"></i></a>
+        <a href="#" aria-label="YouTube" style="color: var(--text); font-size: 1.5rem;"><i
+                class="fab fa-youtube"></i></a>
+        <a href="#" aria-label="Telegram" style="color: var(--text); font-size: 1.5rem;"><i
+                class="fab fa-telegram"></i></a>
+    </div>
 
 
 </body>
