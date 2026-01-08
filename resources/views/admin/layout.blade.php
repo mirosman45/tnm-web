@@ -169,7 +169,7 @@
             background: var(--primary-light);
         }
 
-        button, 
+        button,
         input[type="submit"] {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
@@ -285,9 +285,12 @@
         <h1>⚙️ {{ __('messages.admin_panel') }}</h1>
         <div class="user-info">
             <select onchange="location=this.value">
-                <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}> English</option>
-                <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}>پښتو</option>
-                <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}> دری</option>
+                <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>
+                    English</option>
+                <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}>پښتو
+                </option>
+                <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}> دری
+                </option>
             </select>
             <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                 @csrf
@@ -304,9 +307,12 @@
         <a href="{{ route('admin.news.index', ['type' => 'day']) }}">📅 {{ __('messages.news_of_day') }}</a>
         <a href="{{ route('admin.news.index', ['type' => 'week']) }}">📆 {{ __('messages.news_of_week') }}</a>
         <hr style="border-color: var(--border); margin: 15px 0;">
-        <a href="{{ route('admin.news.create', ['type' => 'breaking']) }}">➕ {{ __('messages.add_news') }} ({{ __('messages.breaking') }})</a>
-        <a href="{{ route('admin.news.create', ['type' => 'day']) }}">➕ {{ __('messages.add_news') }} ({{ __('messages.day') }})</a>
-        <a href="{{ route('admin.news.create', ['type' => 'week']) }}">➕ {{ __('messages.add_news') }} ({{ __('messages.week') }})</a>
+        <a href="{{ route('admin.news.create', ['type' => 'breaking']) }}">➕ {{ __('messages.add_news') }}
+            ({{ __('messages.breaking') }})</a>
+        <a href="{{ route('admin.news.create', ['type' => 'day']) }}">➕ {{ __('messages.add_news') }}
+            ({{ __('messages.day') }})</a>
+        <a href="{{ route('admin.news.create', ['type' => 'week']) }}">➕ {{ __('messages.add_news') }}
+            ({{ __('messages.week') }})</a>
         <hr style="border-color: var(--border); margin: 15px 0;">
         <a href="{{ route('home') }}" style="color: var(--success);">👁️ {{ __('messages.view_site') }}</a>
     </div>
@@ -315,7 +321,7 @@
         @yield('content')
     </div>
 
-    
+
 
 </body>
 

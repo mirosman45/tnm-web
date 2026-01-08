@@ -3,58 +3,53 @@
 
 <head>
     <title>@yield('title') - TNM News</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         :root {
-            /* CORE BACKGROUND & TEXT */
             --background: #f5f7fb;
             --surface: #ffffff;
             --text: #1f2937;
             --text-muted: #6b7280;
-
-            /* PRIMARY COLOR SYSTEM */
             --primary: #6366f1;
-            /* Soft indigo */
             --primary-dark: #4f46e5;
             --primary-light: rgba(99, 102, 241, 0.25);
-
-            /* ACCENTS & STATES */
             --danger: #ef4444;
             --border: #e5e7eb;
-
-            /* UI FEEL */
             --radius: 12px;
             --transition: 0.3s ease;
-
-            /* SHADOWS (SMOOTHER & MODERN) */
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
 
-        /* RESET & BASE STYLES */
+        /* SYSTEM DARK MODE */
+        [data-theme="dark"] {
+            --background: #0f172a;
+            --surface: #020617;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: #1e293b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html,
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--background);
             color: var(--text);
-            line-height: 1.6;
+            transition: background var(--transition), color var(--transition);
         }
 
-        /* NAVBAR - PRIMARY */
         nav:first-of-type {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
-            justify-content: center;
             align-items: center;
             gap: 30px;
             padding: 15px 20px;
@@ -63,127 +58,88 @@
             z-index: 100;
             box-shadow: var(--shadow-md);
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         nav:first-of-type a {
             color: #fff;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
-            transition: all var(--transition);
-            position: relative;
+            transition: var(--transition);
         }
 
         nav:first-of-type a:hover {
-            opacity: 0.8;
+            opacity: 0.85;
             transform: translateY(-2px);
         }
 
-        nav:first-of-type a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #fff;
-            transition: width var(--transition);
-        }
-
-        nav:first-of-type a:hover::after {
-            width: 100%;
-        }
-
-        /* DATETIME BADGE */
         #live-datetime {
-            background: rgba(13, 13, 14, 0.2);
-            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.5rem;
-            font-weight: 600;
+            font-size: 0.7rem;
             color: #fff;
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
+            transition: var(--transition);
         }
 
-        /* THEME TOGGLE */
+        #live-datetime:hover {
+            background: rgba(0, 0, 0, 0.35);
+        }
+
         .theme-toggle {
-            background: rgba(212, 186, 186, 0.2);
+            background: rgba(255, 255, 255, 0.2);
             border: 2px solid #fff;
             color: #fff;
-
-            width: 10px;
-            height: 10px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 30%;
+            cursor: default;
+            transition: var(--transition);
         }
 
         .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(20deg) scale(1.1);
+            background: rgba(255, 255, 255, 0.35);
+            transform: rotate(10deg) scale(1.05);
         }
 
-        /* NAVBAR - SECONDARY (AUTH & LANGUAGE) */
         nav:nth-of-type(2) {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             padding: 12px 30px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             box-shadow: var(--shadow-sm);
+            flex-wrap: wrap;
         }
 
         nav:nth-of-type(2) ul {
-            list-style: none;
             display: flex;
             gap: 15px;
-            margin: 0;
-            padding: 0;
+            list-style: none;
         }
 
         nav:nth-of-type(2) li a,
         nav:nth-of-type(2) li button {
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.4rem;
             border-radius: 50px;
-            text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
         }
 
-        nav:nth-of-type(2) li:first-child a {
-            background: #4f46e5;
+        nav:nth-of-type(2) li a {
+            background: var(--primary);
             color: #fff;
-        }
-
-        nav:nth-of-type(2) li:nth-child(2) a {
-            background: #9793d7;
-            color: #fff;
+            text-decoration: none;
         }
 
         nav:nth-of-type(2) li a:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-        }
-
-        nav:nth-of-type(2) li:first-child a:hover {
-            background: #645cbd;
-        }
-
-        nav:nth-of-type(2) li:nth-child(2) a:hover {
-            background: #817bc0;
-        }
-
-        nav:nth-of-type(2) li a:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            background: var(--primary-dark);
+            transform: translateY(-2px) scale(1.03);
         }
 
         nav:nth-of-type(2) li button {
@@ -195,121 +151,71 @@
         nav:nth-of-type(2) li button:hover {
             background: var(--danger);
             color: #fff;
+            transform: translateY(-2px);
         }
 
-        /* LANGUAGE SELECTOR */
+        .social-lang-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .social-icons a {
+            font-size: 1.4rem;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.15);
+        }
+
         select {
-            padding: 0.6rem 1rem;
-            border: 2px solid var(--border);
+            padding: 0.55rem 1rem;
             border-radius: var(--radius);
+            border: 2px solid var(--border);
+            font-weight: 600;
+            cursor: pointer;
             background: var(--surface);
             color: var(--text);
-            cursor: pointer;
-            font-weight: 500;
-            transition: all var(--transition);
-            margin-left: auto;
+            transition: var(--transition);
         }
 
         select:hover {
             border-color: var(--primary);
-        }
-
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
             box-shadow: 0 0 0 3px var(--primary-light);
         }
 
-        /* PAGE CONTENT */
         .content {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        /* HEADINGS */
-        h1,
-        h2 {
-            margin-bottom: 25px;
-            color: var(--text);
-            font-weight: 800;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-        }
-
-        h2 {
-            font-size: 2rem;
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 15px;
-        }
-
-        p {
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        /* FOOTER */
         footer {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             text-align: center;
             padding: 30px;
             margin-top: 60px;
-            box-shadow: var(--shadow-md);
+            transition: var(--transition);
         }
 
-        footer p {
-            color: rgba(255, 255, 255, 0.9);
-            margin: 0;
-        }
-
-        /* RESPONSIVE ADJUSTMENTS */
-        @media (max-width: 768px) {
-            nav:first-of-type {
-                gap: 15px;
-                padding: 12px 10px;
-            }
-
-            nav:first-of-type a {
-                font-size: 0.9rem;
-            }
-
-            #live-datetime {
-                display: none;
-            }
-
-            nav:nth-of-type(2) {
-                flex-wrap: wrap;
-                padding: 10px;
-            }
-
-            select {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-
-            .content {
-                margin: 20px auto;
-                padding: 0 15px;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            h2 {
-                font-size: 1.4rem;
-            }
+        footer:hover {
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR PRIMARY -->
     <nav>
         <a href="{{ route('home') }}">📰 {{ __('messages.home') }}</a>
         <a href="{{ route('news.breaking') }}">🔴 {{ __('messages.breaking_news') }}</a>
@@ -319,10 +225,8 @@
         <a href="{{ route('about') }}">ℹ️ {{ __('messages.about') }}</a>
         <a href="{{ route('contact') }}">📧 {{ __('messages.contact') }}</a>
         <span id="live-datetime"></span>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
 
-    <!-- NAVBAR SECONDARY - AUTH & LANGUAGE -->
     <nav>
         <ul>
             @guest
@@ -333,25 +237,36 @@
                     <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         {{ __('messages.logout') }} ({{ Auth::user()->name }})
                     </button>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
                     </form>
                 </li>
             @endguest
         </ul>
 
-        <select onchange="location=this.value">
-            <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}> English
-            </option>
-            <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}> پښتو
-            </option>
-            <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}> دری
-            </option>
-        </select>
+        <div class="social-lang-bar">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
 
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+
+            <select onchange="location=this.value">
+                <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>
+                    English</option>
+                <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}>
+                    پښتو</option>
+                <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}>
+                    دری</option>
+            </select>
+        </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <div class="content">
         @yield('content')
     </div>
@@ -361,67 +276,28 @@
     </footer>
 
     <script>
-        // Live Date/Time
         function updateDateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-
-            document.getElementById('live-datetime').textContent = `${hours}:${minutes}:${seconds} | ${day}/${month}/${year}`;
+            const n = new Date();
+            document.getElementById('live-datetime').textContent =
+                `${n.toLocaleTimeString()} | ${n.toLocaleDateString()}`;
         }
-
         setInterval(updateDateTime, 1000);
         updateDateTime();
 
-        // Theme Toggle
+        /* SYSTEM DARK MODE ONLY */
         const root = document.documentElement;
-        const toggleBtn = document.getElementById('themeToggle');
+        const toggle = document.getElementById('themeToggle');
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
 
-        const savedTheme = localStorage.getItem('theme');
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const activeTheme = savedTheme ?? (systemDark ? 'dark' : 'light');
+        function applyTheme() {
+            const dark = media.matches;
+            root.setAttribute('data-theme', dark ? 'dark' : 'light');
+            toggle.textContent = dark ? '☀️' : '🌙';
+        }
 
-        root.setAttribute('data-theme', activeTheme);
-        toggleBtn.textContent = activeTheme === 'dark' ? '☀️' : '🌙';
-
-        toggleBtn.addEventListener('click', () => {
-            const isDark = root.getAttribute('data-theme') === 'dark';
-            const newTheme = isDark ? 'light' : 'dark';
-            root.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                const theme = e.matches ? 'dark' : 'light';
-                root.setAttribute('data-theme', theme);
-                toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
-            }
-        });
+        applyTheme();
+        media.addEventListener('change', applyTheme);
     </script>
-
-
-    {{-- social bar --}}
-    <div style="display: flex; gap: 1rem; margin-bottom: 30px;">
-        <a href="#" aria-label="Facebook" style="color: var(--text); font-size: 1.5rem;"><i
-                class="fab fa-facebook"></i></a>
-        <a href="#" aria-label="Twitter" style="color: var(--text); font-size: 1.5rem;"><i
-                class="fab fa-twitter"></i></a>
-        <a href="#" aria-label="Instagram" style="color: var(--text); font-size: 1.5rem;"><i
-                class="fab fa-instagram"></i></a>
-        <a href="#" aria-label="LinkedIn" style="color: var(--text); font-size: 1.5rem;"><i
-                class="fab fa-linkedin"></i></a>
-        <a href="#" aria-label="YouTube" style="color: var(--text); font-size: 1.5rem;"><i
-                class="fab fa-youtube"></i></a>
-        <a href="#" aria-label="Telegram" style="color: var(--text); font-size: 1.5rem;"><i
-                class="fab fa-telegram"></i></a>
-    </div>
-
 
 </body>
 

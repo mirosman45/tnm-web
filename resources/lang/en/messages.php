@@ -135,6 +135,9 @@ return [
 
 'only_admins' => 'Only administrators can perform this action.',
 
+'admin_dashboard' => 'Admin Dashboard',
+
+'back_to_dashboard' => 'Back to Dashboard',
 ];
 
 
