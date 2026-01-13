@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * Mass assignable attributes
+     * Mass-assignable attributes
      */
     protected $fillable = [
         'name',
