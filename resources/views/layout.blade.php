@@ -271,7 +271,7 @@
        .logo-copy {
     display: block;
     margin: 20px auto;
-    height: 400px;   /* increased from 250px to 400px */
+    height: 250px;   /* increased from 250px to 400px */
     max-width: 95%;  /* slightly larger max width */
     width: auto;
     animation: float 3s ease-in-out infinite;
