@@ -1,29 +1,49 @@
-/* ================= ROOT TOKENS (new palette) ================= */
+/* ============================================================
+   ROOT TOKENS — Enhanced for Professional UI Systems
+============================================================ */
 :root {
+    /* Brand Colors */
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
     --primary-light: #dbeafe;
+
     --secondary: #7c3aed;
     --secondary-dark: #6d28d9;
+
     --accent: #ec4899;
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
 
+    /* Neutrals */
     --surface: #ffffff;
     --background: #f8fafc;
     --text: #0f172a;
     --text-muted: #64748b;
     --border: #e2e8f0;
 
+    /* Layout */
     --radius: 12px;
-    --transition: 0.3s ease;
+    --radius-full: 999px;
+    --spacing-xs: 0.35rem;
+    --spacing-sm: 0.65rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+
+    /* Motion */
+    --transition: 0.25s ease;
+    --transition-fast: 0.15s ease;
+
+    /* Elevation */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
     --shadow-md: 0 6px 16px rgba(0, 0, 0, .12);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, .14);
     --shadow-xl: 0 18px 40px rgba(0, 0, 0, .18);
 }
 
-/* ================= DARK MODE ================= */
+/* ============================================================
+   DARK MODE — Improved Contrast + Material‑like Depth
+============================================================ */
 [data-theme="dark"] {
     --surface: #1e293b;
     --background: #0f172a;
@@ -34,9 +54,14 @@
     --primary: #3b82f6;
     --primary-dark: #2563eb;
     --primary-light: rgba(59, 130, 246, .2);
+
+    --shadow-md: 0 6px 16px rgba(0, 0, 0, .35);
+    --shadow-xl: 0 18px 40px rgba(0, 0, 0, .45);
 }
 
-/* ================= RESET ================= */
+/* ============================================================
+   RESET + BASE
+============================================================ */
 *,
 *::before,
 *::after {
@@ -50,9 +75,26 @@ body {
     font-family: "Inter", system-ui, sans-serif;
     background: var(--background);
     color: var(--text);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ================= BUTTONS ================= */
+/* Better focus accessibility */
+:focus-visible {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 3px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================================
+   BUTTONS — Unified, Professional, Scalable
+============================================================ */
 button,
 input[type="submit"],
 .btn,
@@ -63,34 +105,25 @@ a.btn {
     background: var(--primary);
     color: #fff !important;
     font-weight: 600;
-    padding: 0.65rem 1.25rem;
+    padding: var(--spacing-sm) var(--spacing-md);
     font-size: 0.95rem;
-    transition: all var(--transition);
-    display: inline-block;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    text-align: center;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
+    gap: 0.35rem;
 }
 
 button:hover,
-input[type="submit"]:hover,
-.btn:hover,
-a.btn:hover {
+.btn:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-md);
 }
 
-/* ================= BUTTON VARIANTS ================= */
-.btn-primary {
-    background: var(--primary);
-    color: #fff !important;
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-}
-
+/* Button Variants */
 .btn-secondary {
     background: var(--secondary);
 }
@@ -117,7 +150,6 @@ a.btn:hover {
 
 .btn-warning {
     background: var(--warning);
-    color: #fff;
 }
 
 .btn-warning:hover {
@@ -139,33 +171,26 @@ a.btn:hover {
     font-size: 0.85rem;
 }
 
-/* --------------------------------------------------
-   Sign-In / Sign-Up  (no background, no hover colour)
--------------------------------------------------- */
+/* Plain Auth Buttons */
 .btn-plain {
     background: transparent;
     color: var(--text);
     border: 1px solid var(--border);
-    padding: 0.4rem 0.8rem;
+    padding: 0.45rem 0.9rem;
     border-radius: var(--radius);
     font-weight: 500;
-    cursor: pointer;
-    transition: none;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
+    transition: var(--transition-fast);
 }
 
 .btn-plain:hover {
-    border-color: var(--border);
-    color: var(--text);
+    background: var(--surface);
 }
 
-/* ================= AUTH FORMS ================= */
+/* ============================================================
+   AUTH FORM
+============================================================ */
 .auth-form {
-    max-width: 400px;
+    max-width: 420px;
     margin: 3rem auto;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -174,14 +199,18 @@ a.btn:hover {
     box-shadow: var(--shadow-md);
 }
 
-/* ================= COMMENTS ================= */
+/* ============================================================
+   COMMENTS
+============================================================ */
 .comment-section {
-    max-width: 400px;
+    max-width: 420px;
     margin: 1.5rem auto;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
-/* ================= LIKE / DISLIKE ================= */
+/* ============================================================
+   LIKE / DISLIKE
+============================================================ */
 .like-buttons,
 .news-likes {
     display: flex;
@@ -195,26 +224,28 @@ a.btn:hover {
 .news-likes button {
     padding: 0.65rem 1.5rem;
     font-size: 0.95rem;
-    border-radius: 25px;
+    border-radius: var(--radius-full);
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: #fff;
     border: none;
     cursor: pointer;
-    transition: all var(--transition);
-    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
 }
 
 .like-buttons button:hover,
 .news-likes button:hover {
     transform: scale(1.05);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-md);
 }
 
 .news-likes button[name="is_like"] {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-/* ================= NEWS SECTION ================= */
+/* ============================================================
+   NEWS SECTION
+============================================================ */
 .news-section {
     margin-bottom: 50px;
 }
@@ -246,18 +277,20 @@ a.btn:hover {
     gap: 25px;
 }
 
-/* ================= NEWS CARD ================= */
+/* ============================================================
+   NEWS CARD — Cleaner, More Material‑like
+============================================================ */
 .news-card {
     background: var(--surface);
     border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
 }
 
 .news-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-lg);
 }
 
 .news-image {
@@ -270,7 +303,6 @@ a.btn:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
 }
 
 .news-image.no-image {
@@ -294,22 +326,23 @@ a.btn:hover {
     margin-bottom: 10px;
 }
 
-/* ================= BREAKING NEWS CARD (IMAGE RIGHT) ================= */
+/* ============================================================
+   BREAKING NEWS — Cleaner Layout
+============================================================ */
 .breaking-news {
     display: flex;
     flex-direction: column;
     border-left: 5px solid var(--danger);
     background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02));
-    overflow: hidden;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
     margin-bottom: 25px;
 }
 
 .breaking-news:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-lg);
 }
 
 .breaking-news a.breaking-news-link {
@@ -344,7 +377,6 @@ a.btn:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
 }
 
 .breaking-news-image .no-image {
@@ -356,14 +388,13 @@ a.btn:hover {
     font-size: 3rem;
 }
 
-/* Responsive: image right for larger screens */
+/* Desktop layout */
 @media (min-width: 768px) {
     .breaking-news a.breaking-news-link {
         flex-direction: row;
     }
 
     .breaking-news-content {
-        flex: 1;
         padding: 30px;
     }
 
@@ -373,25 +404,28 @@ a.btn:hover {
     }
 }
 
-/* ================= MOBILE ================= */
+/* ============================================================
+   MOBILE
+============================================================ */
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
     }
 }
 
-/* ================= AUTH BUTTONS ================= */
+/* ============================================================
+   AUTH BUTTONS
+============================================================ */
 .auth-btn {
     display: inline-block;
     padding: 0.65rem 1.25rem;
-    border-radius: 25px;
+    border-radius: var(--radius-full);
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: #fff;
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
-    transition: all var(--transition);
-    cursor: pointer;
+    transition: var(--transition);
 }
 
 .auth-btn:hover {
@@ -404,15 +438,17 @@ a.btn:hover {
     background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
 }
 
-/* ================= LOGOUT BUTTON ================= */
+/* ============================================================
+   LOGOUT BUTTON
+============================================================ */
 .logout-btn {
     padding: 0.65rem 1.25rem;
-    border-radius: 25px;
+    border-radius: var(--radius-full);
     border: none;
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all var(--transition);
+    transition: var(--transition);
 }
 
 .logout-btn.danger {
@@ -425,4 +461,145 @@ a.btn:hover {
     background: var(--danger);
     color: #fff;
     transform: translateY(-2px);
+}
+
+/* ============================================================
+   PREMIUM UI ENHANCEMENTS — Smooth, Stylish, Modern
+============================================================ */
+
+/* Softer, more premium shadows */
+:root {
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, .06);
+    --shadow-md: 0 8px 20px rgba(0, 0, 0, .12);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, .14);
+    --shadow-xl: 0 24px 48px rgba(0, 0, 0, .18);
+
+    --transition: 0.28s cubic-bezier(.4, 0, .2, 1);
+    --transition-fast: 0.18s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Smooth hover lift for all cards */
+.news-card,
+.breaking-news,
+.auth-form {
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.news-card:hover,
+.breaking-news:hover,
+.auth-form:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Glassy surface effect for cards */
+.news-card,
+.auth-form,
+.breaking-news {
+    backdrop-filter: saturate(180%) blur(12px);
+}
+
+/* More elegant section titles */
+.section-title {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+
+    color: transparent;
+}
+
+/* Smooth fade-in animation for all grid items */
+.grid>* {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Premium button glow effect */
+.btn,
+.auth-btn,
+.like-buttons button,
+.news-likes button {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after,
+.auth-btn::after,
+.like-buttons button::after,
+.news-likes button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.btn:hover::after,
+.auth-btn:hover::after,
+.like-buttons button:hover::after,
+.news-likes button:hover::after {
+    opacity: 1;
+}
+
+/* Smoother button hover motion */
+.btn:hover,
+.auth-btn:hover,
+.like-buttons button:hover,
+.news-likes button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Stylish input fields (if you add forms later) */
+input,
+textarea {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 0.7rem 1rem;
+    transition: border var(--transition), box-shadow var(--transition);
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+/* Breaking news: more dramatic look */
+.breaking-news {
+    border-left-width: 6px;
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.12),
+            rgba(239, 68, 68, 0.05));
+}
+
+/* News images: smooth zoom on hover */
+.news-image img,
+.breaking-news-image img {
+    transition: transform 0.6s ease;
+}
+
+.news-card:hover .news-image img,
+.breaking-news:hover .breaking-news-image img {
+    transform: scale(1.06);
+}
+
+/* Slightly larger tap targets on mobile */
+@media (max-width: 768px) {
+
+    button,
+    .btn,
+    .auth-btn {
+        padding: 0.8rem 1.4rem;
+        font-size: 1rem;
+    }
 }

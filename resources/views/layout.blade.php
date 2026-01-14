@@ -199,7 +199,7 @@
         /* Admin Dashboard Button Hover */
         a[href="{{ route('admin.dashboard') }}"]:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,123,255,.5);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, .5);
             background: linear-gradient(135deg, #0056b3, #004494);
         }
 
@@ -220,12 +220,14 @@
             justify-content: center;
             padding: 0;
         }
+
         #themeChanger:hover {
             transform: translateY(-2px) scale(1.08);
             box-shadow: 0 4px 10px rgba(99, 102, 241, .45);
         }
+
         /* ----  SIGN-IN / SIGN-UP  (social-media size, no bg)  ---- */
-        .btn-plain{
+        .btn-plain {
             background: transparent;
             color: var(--text);
             border: 1px solid var(--border);
@@ -240,7 +242,8 @@
             justify-content: center;
             font-size: 0.875rem;
         }
-        .btn-plain:hover{
+
+        .btn-plain:hover {
             border-color: var(--primary);
             color: var(--primary);
         }
@@ -249,96 +252,105 @@
 
 <body>
 
-{{-- floating admin button unchanged --}}
-@auth
-    @if(Auth::user()->isAdmin())
-        <a href="{{ route('admin.dashboard') }}"
-           style="position:relative; top:110px; left:220px; z-index:9999;
-                  background:linear-gradient(135deg, #5537e8, #0056b3);
-                  color:#fff; padding:7px 13px; border-radius:20px; text-decoration:none;
-                  box-shadow:0 4px 15px rgba(0,123,255,.35); font-weight:600; font-size:14px;
-                  letter-spacing:.4px; transition:all .3s ease; display:inline-flex; align-items:center; gap:6px;">
-            ⬅ Dashboard
-        </a>
-    @endif
-@endauth
+    {{-- floating admin button unchanged --}}
 
-<nav>
-    <a href="{{ route('home') }}">📰 {{ __('messages.home') }}</a>
-    <a href="{{ route('news.breaking') }}">🔴 {{ __('messages.breaking_news') }}</a>
-    <a href="{{ route('news.day') }}">📅 {{ __('messages.news_of_day') }}</a>
-    <a href="{{ route('news.week') }}">📆 {{ __('messages.news_of_week') }}</a>
-    <a href="{{ route('books.index') }}">📚 Books</a>
-    <a href="{{ route('about') }}">ℹ️ {{ __('messages.about') }}</a>
-    <a href="{{ route('contact') }}">📧 {{ __('messages.contact') }}</a>
-    <span id="live-datetime"></span>
-</nav>
 
-<nav>
-    <ul>
-        @guest
-            <li><a href="{{ route('login') }}" class="btn-plain">{{ __('messages.login') }}</a></li>
-            <li><a href="{{ route('register') }}" class="btn-plain">{{ __('messages.sign_up') }}</a></li>
-        @else
-            <li>
-                <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    {{ __('messages.logout') }} ({{ Auth::user()->name }})
-                </button>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">@csrf</form>
-            </li>
-        @endguest
-    </ul>
+    <nav>
+        <a href="{{ route('home') }}">📰 {{ __('messages.home') }}</a>
+        <a href="{{ route('news.breaking') }}">🔴 {{ __('messages.breaking_news') }}</a>
+        <a href="{{ route('news.day') }}">📅 {{ __('messages.news_of_day') }}</a>
+        <a href="{{ route('news.week') }}">📆 {{ __('messages.news_of_week') }}</a>
+        <a href="{{ route('books.index') }}">📚 Books</a>
+        <a href="{{ route('about') }}">ℹ️ {{ __('messages.about') }}</a>
+        <a href="{{ route('contact') }}">📧 {{ __('messages.contact') }}</a>
+        <span id="live-datetime"></span>
+    </nav>
 
-    <div class="social-lang-bar">
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-telegram"></i></a>
-        </div>
+    <nav>
+        <ul>
+            @guest
+                <li><a href="{{ route('login') }}" class="btn-plain">{{ __('messages.login') }}</a></li>
+                <li><a href="{{ route('register') }}" class="btn-plain">{{ __('messages.sign_up') }}</a></li>
+            @else
 
-        <button id="themeChanger" title="Choose theme" style="background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+            @endguest
+            @auth
+                @if(Auth::user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}"
+                        style="position:relative; top:5px; left:30px; z-index:9999;
+                                                  background:linear-gradient(135deg, #5537e8, #0056b3);
+                                                  color:#fff; padding:7px 13px; border-radius:20px; text-decoration:none;
+                                                  box-shadow:0 4px 15px rgba(0,123,255,.35); font-weight:600; font-size:14px;
+                                                  letter-spacing:.4px; transition:all .3s ease; display:inline-flex; align-items:center; gap:6px;">
+                        ⬅ Dashboard
+                    </a>
+                @endif
+            @endauth
+        </ul>
+
+        <div class="social-lang-bar">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+
+            <button id="themeChanger" title="Choose theme" style="background:linear-gradient(135deg, var(--primary), var(--primary-dark));
                   border:none; width:26px; height:26px; border-radius:50%; color:#fff; font-size:12px;
                   cursor:pointer; box-shadow:var(--shadow-sm); transition:transform .3s ease, box-shadow .3s ease;
                   display:flex; align-items:center; justify-content:center; padding:0;">
-            ⚙️
-        </button>
+                ⚙️
+            </button>
 
-        <select onchange="location=this.value">
-            <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>
-            <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}>پښتو</option>
-            <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}>دری</option>
-        </select>
-    </div>
-</nav>
+            <select onchange="location=this.value">
+                <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>
+                    English</option>
+                <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}>پښتو
+                </option>
+                <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}>دری
+                </option>
+            </select>
+        </div>
+    </nav>
 
-<div class="content">@yield('content')</div>
+    <div class="content">@yield('content')</div>
 
-<footer><p>{{ __('messages.rights_reserved') }}</p></footer>
+    <footer>
+        <p>{{ __('messages.rights_reserved') }}</p>
+    </footer>
 
-<!-- theme modal + scripts -->
-<div id="themeChooser" style="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;">
-    <div style="background:var(--surface);color:var(--text);padding:30px 40px;border-radius:var(--radius);box-shadow:var(--shadow-xl);text-align:center;max-width:320px;">
-        <h3 style="margin-bottom:15px;">Choose your theme</h3>
-        <p style="margin-bottom:25px;font-size:14px;color:var(--text-muted);">You can always change it later with the ⚙️ button in the header.</p>
-        <div style="display:flex;gap:15px;justify-content:center;">
-            <button onclick="saveTheme('light')" style="flex:1;padding:10px;border-radius:var(--radius);border:2px solid var(--primary);background:#fff;color:var(--primary);font-weight:600;">☀️ Light</button>
-            <button onclick="saveTheme('dark')"  style="flex:1;padding:10px;border-radius:var(--radius);border:2px solid var(--primary);background:var(--primary);color:#fff;font-weight:600;">🌙 Dark</button>
+    <!-- theme modal + scripts -->
+    <div id="themeChooser"
+        style="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;">
+        <div
+            style="background:var(--surface);color:var(--text);padding:30px 40px;border-radius:var(--radius);box-shadow:var(--shadow-xl);text-align:center;max-width:320px;">
+            <h3 style="margin-bottom:15px;">Choose your theme</h3>
+            <p style="margin-bottom:25px;font-size:14px;color:var(--text-muted);">You can always change it later with
+                the ⚙️ button in the header.</p>
+            <div style="display:flex;gap:15px;justify-content:center;">
+                <button onclick="saveTheme('light')"
+                    style="flex:1;padding:10px;border-radius:var(--radius);border:2px solid var(--primary);background:#fff;color:var(--primary);font-weight:600;">☀️
+                    Light</button>
+                <button onclick="saveTheme('dark')"
+                    style="flex:1;padding:10px;border-radius:var(--radius);border:2px solid var(--primary);background:var(--primary);color:#fff;font-weight:600;">🌙
+                    Dark</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-const root=document.documentElement,chooser=document.getElementById('themeChooser');
-function applyTheme(t){root.setAttribute('data-theme',t);}
-function saveTheme(t){localStorage.setItem('tnm-theme',t);chooser.style.display='none';applyTheme(t);}
-(function(){const s=localStorage.getItem('tnm-theme');s?(applyTheme(s),chooser.style.display='none'):(chooser.style.display='flex');})();
-function upd(){const n=new Date();document.getElementById('live-datetime').textContent=`${n.toLocaleTimeString()} | ${n.toLocaleDateString()}`;}
-setInterval(upd,1000); upd();
-document.getElementById('themeChanger').addEventListener('click',()=>chooser.style.display='flex');
-</script>
+    <script>
+        const root = document.documentElement, chooser = document.getElementById('themeChooser');
+        function applyTheme(t) { root.setAttribute('data-theme', t); }
+        function saveTheme(t) { localStorage.setItem('tnm-theme', t); chooser.style.display = 'none'; applyTheme(t); }
+        (function () { const s = localStorage.getItem('tnm-theme'); s ? (applyTheme(s), chooser.style.display = 'none') : (chooser.style.display = 'flex'); })();
+        function upd() { const n = new Date(); document.getElementById('live-datetime').textContent = `${n.toLocaleTimeString()} | ${n.toLocaleDateString()}`; }
+        setInterval(upd, 1000); upd();
+        document.getElementById('themeChanger').addEventListener('click', () => chooser.style.display = 'flex');
+    </script>
 
 </body>
+
 </html>
