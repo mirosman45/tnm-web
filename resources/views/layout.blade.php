@@ -104,39 +104,6 @@
             list-style: none;
         }
 
-        nav:nth-of-type(2) li a,
-        nav:nth-of-type(2) li button {
-            padding: 0.6rem 1.4rem;
-            border-radius: 100px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(white);
-        }
-
-        nav:nth-of-type(2) li a {
-            background: var(--primary);
-            color: #fff;
-            text-decoration: none;
-        }
-
-        nav:nth-of-type(2) li a:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px) scale(1.03);
-        }
-
-        nav:nth-of-type(2) li button {
-            background: transparent;
-            color: var(--danger);
-            border: 2px solid var(--danger);
-        }
-
-        nav:nth-of-type(2) li button:hover {
-            background: var(--danger);
-            color: #fff;
-            transform: translateY(-2px);
-        }
 
         .social-lang-bar {
             display: flex;
@@ -278,10 +245,10 @@
                 @if(Auth::user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}"
                         style="position:relative; top:5px; left:30px; z-index:9999;
-                                                  background:linear-gradient(135deg, #5537e8, #0056b3);
-                                                  color:#fff; padding:7px 13px; border-radius:20px; text-decoration:none;
-                                                  box-shadow:0 4px 15px rgba(0,123,255,.35); font-weight:600; font-size:14px;
-                                                  letter-spacing:.4px; transition:all .3s ease; display:inline-flex; align-items:center; gap:6px;">
+                                                                  background:linear-gradient(135deg, #5537e8, #0056b3);
+                                                                  color:#fff; padding:7px 13px; border-radius:20px; text-decoration:none;
+                                                                  box-shadow:0 4px 15px rgba(0,123,255,.35); font-weight:600; font-size:14px;
+                                                                  letter-spacing:.4px; transition:all .3s ease; display:inline-flex; align-items:center; gap:6px;">
                         ⬅ Dashboard
                     </a>
                 @endif
