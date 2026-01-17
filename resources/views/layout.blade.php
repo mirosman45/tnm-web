@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --background: #f5f7fb;
+            --background: #e0e0e0; /* UPDATED: slightly darker gray */
             --surface: #ffffff;
             --text: #1f2937;
             --text-muted: #6b7280;
@@ -68,7 +68,6 @@
             flex-wrap: wrap;
         }
 
-        /* --- BIG LOGO WITH FLOATING ANIMATION --- */
         nav:first-of-type .logo {
             height: 70px;
             width: auto;
@@ -78,22 +77,9 @@
         }
 
         @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
-
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        nav:first-of-type .nav-left a:first-child {
-            display: flex;
-            align-items: center;
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
         }
 
         nav:first-of-type a {
@@ -268,22 +254,22 @@
         }
 
         /* Logo after second nav */
-       .logo-copy {
-    display: block;
-    margin: 20px auto;
-    height: 250px;   /* increased from 250px to 400px */
-    max-width: 95%;  /* slightly larger max width */
-    width: auto;
-    animation: float 3s ease-in-out infinite;
-}
-@media (max-width: 768px) {
-    .logo-copy {
-        height: 300px;  /* bigger than previous 180px */
-        max-width: 90%;
-    }
-}
+        .logo-copy {
+            display: block;
+            height: 250px;
+            max-width: 95%;
+            width: auto;
+            animation: float 3s ease-in-out infinite;
+        }
 
-        /* --- NEWS IMAGES RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .logo-copy {
+                height: 300px;
+                max-width: 90%;
+            }
+        }
+
+        /* NEWS IMAGES RESPONSIVE */
         .content img,
         .news-content img {
             max-width: 100%;
@@ -359,8 +345,19 @@
         </div>
     </nav>
 
-    <!-- Second copy of logo -->
+   <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:20px;">
     <img src="{{ asset('images/tnm-logo.png') }}" class="logo-copy" alt="TNM Logo">
+
+    <div style="max-width:520px;">
+        <h1 style="font-size:2rem;margin-bottom:12px;color:var(--text);">
+            {{ __('messages.home_welcome_title') }}
+        </h1>
+        <p style="font-size:1rem;color:var(--text-muted);line-height:1.6;">
+            {{ __('messages.home_welcome_text') }}
+        </p>
+    </div>
+</div>
+
 
     <div class="content">@yield('content')</div>
 

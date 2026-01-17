@@ -138,6 +138,41 @@ return [
 'admin_dashboard' => 'Admin Dashboard',
 
 'back_to_dashboard' => 'Back to Dashboard',
+ 'home_welcome_title' => 'Welcome to TOP NEWS MEDIA',
+'home_welcome_text' => 'Your trusted source for accurate, fast, and unbiased news. We bring you the latest updates from around the world — breaking news, in-depth analysis, and stories that truly matter.',
+
+
+
+
+
+
+ 
+
+    'about_title' => 'About TOP NEWS MEDIA',
+    'about_text_paragraph_1' => 'TOP NEWS MEDIA is your premier destination for reliable, fast, and unbiased news coverage from around the world. Founded with the mission of empowering readers with accurate information, we strive to deliver news that informs, educates, and inspires.',
+
+    'about_section_1_title' => 'Our Mission',
+    'about_section_1_text' => 'At TOP NEWS MEDIA, we believe that well-informed citizens are the foundation of a strong society. Our mission is to provide timely, trustworthy, and transparent news that helps people understand the world around them. We focus on facts over opinion, clarity over sensationalism, and integrity over speed.',
+
+    'about_section_2_title' => 'Comprehensive Coverage',
+    'about_section_2_text' => 'We cover a wide range of topics including politics, economics, business, technology, science, culture, health, entertainment, and global affairs. Whether it’s breaking news, investigative journalism, or deep-dive analyses, our team ensures that every story is thoroughly researched and verified before publication.',
+
+    'about_section_3_title' => 'Our Team',
+    'about_section_3_text' => 'Our team is composed of experienced journalists, analysts, and editors who are passionate about uncovering the truth. Each member is committed to upholding journalistic standards and ethical reporting. We work tirelessly to ensure that the news you receive is accurate, fair, and comprehensive.',
+
+    'about_section_4_title' => 'Why Choose TOP NEWS MEDIA',
+    'about_section_4_text' => '- Accuracy: Every story is fact-checked and verified from multiple sources.
+- Speed: Breaking news reaches you as it happens, without compromising accuracy.
+- Unbiased Reporting: We provide information without political, social, or cultural bias.
+- In-Depth Analysis: Beyond headlines, we explain the context, implications, and background of every story.',
+
+    'about_section_5_title' => 'Global Perspective',
+    'about_section_5_text' => 'Our coverage extends across continents. From local news to global events, TOP NEWS MEDIA keeps you informed about what’s happening in every corner of the world. We bring you the stories that matter most, not just the stories that get attention.',
+
+    'about_section_6_title' => 'Engaging the Community',
+    'about_section_6_text' => 'We believe that news should spark conversation and understanding. Our platform allows readers to engage, comment, and share perspectives while adhering to respectful discourse. We aim to create an informed community of readers who value truth, knowledge, and accountability. TOP NEWS MEDIA is committed to transparency, integrity, and public service. Join us in exploring the world with clarity, insight, and trust.',
+
+
 ];
 
 
