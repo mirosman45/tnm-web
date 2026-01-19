@@ -76,6 +76,8 @@ body {
     background: var(--background);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 /* Better focus accessibility */
@@ -114,6 +116,8 @@ a.btn {
     text-decoration: none;
     box-shadow: var(--shadow-sm);
     gap: 0.35rem;
+    min-height: 44px;
+    min-width: 44px;
 }
 
 button:hover,
@@ -180,6 +184,8 @@ button:hover,
     border-radius: var(--radius);
     font-weight: 500;
     transition: var(--transition-fast);
+    min-height: 44px;
+    min-width: 44px;
 }
 
 .btn-plain:hover {
@@ -231,6 +237,8 @@ button:hover,
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
+    min-height: 44px;
+    min-width: 44px;
 }
 
 .like-buttons button:hover,
@@ -303,6 +311,11 @@ button:hover,
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.06);
 }
 
 .news-image.no-image {
@@ -318,6 +331,8 @@ button:hover,
 
 .news-content h3 {
     margin: 0.5rem 0;
+    font-size: 1.25rem;
+    line-height: 1.4;
 }
 
 .news-content p.date {
@@ -359,6 +374,8 @@ button:hover,
 
 .breaking-news-content h3 {
     margin: 0.5rem 0;
+    font-size: 1.5rem;
+    line-height: 1.4;
 }
 
 .breaking-news-content p.date {
@@ -377,6 +394,11 @@ button:hover,
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.breaking-news:hover .breaking-news-image img {
+    transform: scale(1.06);
 }
 
 .breaking-news-image .no-image {
@@ -405,15 +427,6 @@ button:hover,
 }
 
 /* ============================================================
-   MOBILE
-============================================================ */
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================================================
    AUTH BUTTONS
 ============================================================ */
 .auth-btn {
@@ -426,6 +439,8 @@ button:hover,
     font-size: 0.95rem;
     text-decoration: none;
     transition: var(--transition);
+    min-height: 44px;
+    min-width: 44px;
 }
 
 .auth-btn:hover {
@@ -449,6 +464,8 @@ button:hover,
     font-size: 0.95rem;
     cursor: pointer;
     transition: var(--transition);
+    min-height: 44px;
+    min-width: 44px;
 }
 
 .logout-btn.danger {
@@ -504,7 +521,8 @@ button:hover,
     font-weight: 700;
     letter-spacing: -0.5px;
     background: linear-gradient(90deg, var(--primary), var(--secondary));
-
+    -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 
@@ -561,15 +579,19 @@ button:hover,
 
 /* Stylish input fields (if you add forms later) */
 input,
-textarea {
+textarea,
+select {
     border-radius: var(--radius);
     border: 1px solid var(--border);
     padding: 0.7rem 1rem;
     transition: border var(--transition), box-shadow var(--transition);
+    font-size: 1rem;
+    min-height: 44px;
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 4px var(--primary-light);
 }
@@ -582,24 +604,351 @@ textarea:focus {
             rgba(239, 68, 68, 0.05));
 }
 
-/* News images: smooth zoom on hover */
-.news-image img,
-.breaking-news-image img {
-    transition: transform 0.6s ease;
-}
+/* ============================================================
+   MOBILE RESPONSIVE FIXES
+============================================================ */
 
-.news-card:hover .news-image img,
-.breaking-news:hover .breaking-news-image img {
-    transform: scale(1.06);
-}
-
-/* Slightly larger tap targets on mobile */
+/* Tablet and below */
 @media (max-width: 768px) {
 
+    /* Base font size adjustment */
+    html {
+        font-size: 14px;
+    }
+
+    /* Section titles */
+    .section-title {
+        font-size: 1.6rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    /* Grid adjustments */
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* News cards */
+    .news-card {
+        margin-bottom: 15px;
+    }
+
+    .news-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .news-content p.date {
+        font-size: 0.75rem;
+    }
+
+    /* Breaking news */
+    .breaking-news-content h3 {
+        font-size: 1.3rem;
+    }
+
+    /* Auth form */
+    .auth-form {
+        margin: 2rem auto;
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+
+    /* Buttons */
+    button,
+    .btn,
+    .auth-btn,
+    .like-buttons button,
+    .news-likes button {
+        padding: 0.8rem 1.4rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .like-buttons,
+    .news-likes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .like-buttons button,
+    .news-likes button {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    /* Comments */
+    .comment-section {
+        max-width: 90%;
+        margin: 1rem auto;
+        padding: 0 15px;
+    }
+
+    /* Empty section */
+    .empty-section {
+        padding: 30px 15px;
+        font-size: 1.1rem;
+    }
+
+    /* News image height */
+    .news-image {
+        height: 180px;
+    }
+
+    /* Prevent horizontal scrolling */
+    body {
+        overflow-x: hidden;
+        position: relative;
+    }
+}
+
+/* Extra small devices (phones) */
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.4rem;
+    }
+
+    .news-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .breaking-news-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .news-image {
+        height: 160px;
+    }
+
+    .auth-form {
+        padding: 1.25rem;
+    }
+
+    /* Button adjustments */
     button,
     .btn,
     .auth-btn {
-        padding: 0.8rem 1.4rem;
-        font-size: 1rem;
+        padding: 0.75rem 1.2rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Landscape mode */
+@media (max-height: 500px) and (orientation: landscape) {
+    .news-image {
+        height: 140px;
+    }
+
+    .news-content {
+        padding: 10px;
+    }
+
+    .breaking-news-content {
+        padding: 15px;
+    }
+}
+
+/* Large screens (optimizations) */
+@media (min-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+    }
+
+    .news-image {
+        height: 220px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Remove hover effects on touch devices */
+    .news-card:hover,
+    .breaking-news:hover,
+    .auth-form:hover {
+        transform: none;
+    }
+
+    .btn:hover,
+    .auth-btn:hover,
+    .like-buttons button:hover,
+    .news-likes button:hover {
+        transform: none;
+    }
+
+    /* Increase touch targets */
+    button,
+    .btn,
+    .auth-btn,
+    input[type="submit"],
+    .btn-plain {
+        min-height: 48px;
+        min-width: 48px;
+    }
+
+    /* Remove image zoom on touch */
+    .news-card:hover .news-image img,
+    .breaking-news:hover .breaking-news-image img {
+        transform: none;
+    }
+}
+
+/* Ensure proper image scaling */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fix for iOS input styling */
+input,
+textarea,
+select {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Prevent text from being too small */
+p,
+li,
+span,
+a {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Ensure links are tappable */
+a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ============================================================
+   EVENTS SECTION
+============================================================ */
+.events-section {
+    margin-bottom: 60px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.event-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.event-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.event-card:hover .event-image img {
+    transform: scale(1.06);
+}
+
+.event-image.no-image {
+    background: linear-gradient(135deg, var(--primary-light), #f0f9ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--primary);
+}
+
+.event-content {
+    padding: 1.5rem;
+}
+
+.event-date {
+    background: linear-gradient(135deg, var(--accent), var(--secondary));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    display: inline-block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.event-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.events-hero {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 3rem 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.events-cta {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 3rem;
+    background: linear-gradient(135deg, var(--background), var(--surface));
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+/* Mobile responsiveness for events */
+@media (max-width: 768px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .event-image {
+        height: 200px;
+    }
+
+    .events-hero {
+        padding: 2rem 1rem;
+    }
+
+    .events-hero h1 {
+        font-size: 2rem;
+    }
+
+    .events-cta {
+        padding: 2rem 1rem;
     }
 }

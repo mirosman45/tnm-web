@@ -2254,7 +2254,10 @@ namespace PHPSTORM_META {
 'messages.news_item','messages.current_image','messages.editor','messages.blocked','messages.name',
 'messages.email','messages.role','messages.confirm_delete_user','messages.upload_book','messages.book_title',
 'messages.upload_pdf','messages.upload','messages.book_deleted','messages.file_not_found','messages.book_uploaded',
-'messages.only_admins',);
+'messages.only_admins','messages.admin_dashboard','messages.back_to_dashboard','messages.home_welcome_title','messages.home_welcome_text',
+'messages.about_title','messages.about_text_paragraph_1','messages.about_section_1_title','messages.about_section_1_text','messages.about_section_2_title',
+'messages.about_section_2_text','messages.about_section_3_title','messages.about_section_3_text','messages.about_section_4_title','messages.about_section_4_text',
+'messages.about_section_5_title','messages.about_section_5_text','messages.about_section_6_title','messages.about_section_6_text',);
         registerArgumentsSet('env', 
 'APP_NAME','APP_ENV','APP_KEY','APP_DEBUG','APP_URL',
 'APP_LOCALE','APP_FALLBACK_LOCALE','APP_FAKER_LOCALE','APP_MAINTENANCE_DRIVER','BCRYPT_ROUNDS',

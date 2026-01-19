@@ -4,14 +4,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NewsViewController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\OtpController; // OTP Controller
+use App\Http\Controllers\OtpController;
+use App\Http\Controllers\EventController;
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -35,7 +35,23 @@ Route::get('/news-of-the-week', [NewsViewController::class, 'week'])->name('news
 
 /*
 |--------------------------------------------------------------------------
-| LANGUAGE SWITCH  (single global route)
+| EVENTS (PUBLIC)
+|--------------------------------------------------------------------------
+*/
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/past', [EventController::class, 'pastEvents'])->name('events.past');
+
+/*
+|--------------------------------------------------------------------------
+| BOOKS (PUBLIC)
+|--------------------------------------------------------------------------
+*/
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+
+/*
+|--------------------------------------------------------------------------
+| LANGUAGE SWITCH (single global route)
 |--------------------------------------------------------------------------
 */
 Route::get('/lang/{locale}', function ($locale) {
@@ -85,6 +101,20 @@ Route::middleware(['auth', AdminMiddleware::class])
             Route::put('/update/{id}', [NewsController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [NewsController::class, 'destroy'])->name('destroy');
         });
+
+        // Events Management - FIXED: Changed all {event} to {id}
+        Route::prefix('events')->name('events.')->group(function () {
+            // Main routes - USING {id}
+            Route::get('/', [EventController::class, 'adminIndex'])->name('index');
+            Route::get('/create', [EventController::class, 'create'])->name('create');
+            Route::post('/', [EventController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [EventController::class, 'edit'])->name('edit'); // Changed to {id}
+            Route::put('/{id}', [EventController::class, 'update'])->name('update'); // Changed to {id}
+            Route::delete('/{id}', [EventController::class, 'destroy'])->name('destroy'); // Changed to {id}
+            
+            // Toggle status - USING {id}
+            Route::post('/{id}/toggle-status', [EventController::class, 'toggleStatus'])->name('toggle-status'); // Changed to {id}
+        });
     });
 
 /*
@@ -103,6 +133,13 @@ Route::middleware('auth')->group(function () {
 
     // Books - Download route (auth required)
     Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
+    
+    // OTP Verification
+    Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
+    Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
+    
+    // Book creation (auth required)
+    Route::post('/books', [BookController::class, 'store'])->name('books.store');
 });
 
 /*
@@ -119,19 +156,3 @@ Route::get('/dashboard', function () {
 
     return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
-
-/*
-|--------------------------------------------------------------------------
-| BOOKS PUBLIC ROUTES
-|--------------------------------------------------------------------------
-*/
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
-
-/*
-|--------------------------------------------------------------------------
-| OTP VERIFICATION ROUTES
-|--------------------------------------------------------------------------
-*/
-Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
-Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
-Route::post('books', [BookController::class, 'store'])->name('books.store');

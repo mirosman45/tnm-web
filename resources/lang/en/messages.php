@@ -142,8 +142,19 @@ return [
 'home_welcome_text' => 'Your trusted source for accurate, fast, and unbiased news. We bring you the latest updates from around the world — breaking news, in-depth analysis, and stories that truly matter.',
 
 
+'events' => 'Events',
+'upcoming_events' => 'Upcoming Events',
+'events_description' => 'Stay updated with the latest conferences, seminars, and community gatherings.',
+'no_upcoming_events' => 'No upcoming events at the moment.',
+'check_back_later' => 'Check back later for new events.',
+'have_event' => 'Have an event to share?',
+'submit_event_text' => 'Want to feature your event on TNM News? Contact us to submit event details.',
+'more_info' => 'More Info',
 
 
+'manage_events' => 'Manage Events',
+'create_event' => 'Create New Event',
+'Events' => 'Events',
 
 
  

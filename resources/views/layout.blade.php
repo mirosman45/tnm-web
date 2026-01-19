@@ -3,6 +3,7 @@
 
 <head>
     <title>@yield('title') - TNM News</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -45,6 +46,12 @@
             background: var(--background);
             color: var(--text);
             transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        html {
+            overflow-x: hidden;
         }
 
         nav:first-of-type {
@@ -58,20 +65,27 @@
             z-index: 100;
             box-shadow: var(--shadow-md);
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-between;
         }
 
-        nav:first-of-type .nav-left {
+        nav:first-of-type .nav-container {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
             flex-wrap: wrap;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        nav:first-of-type .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         nav:first-of-type .logo {
             height: 70px;
             width: auto;
-            margin-right: 8px;
             vertical-align: middle;
             animation: float 3s ease-in-out infinite;
         }
@@ -82,30 +96,24 @@
             100% { transform: translateY(0); }
         }
 
+        nav:first-of-type .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
         nav:first-of-type a {
             color: #fff;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
+            white-space: nowrap;
         }
 
         nav:first-of-type a:hover {
             opacity: 0.85;
             transform: translateY(-2px);
-        }
-
-        #live-datetime {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            color: #fff;
-            font-family: monospace;
-            transition: var(--transition);
-        }
-
-        #live-datetime:hover {
-            background: rgba(0, 0, 0, 0.35);
         }
 
         nav:nth-of-type(2) {
@@ -117,6 +125,7 @@
             gap: 20px;
             box-shadow: var(--shadow-sm);
             flex-wrap: wrap;
+            position: relative;
         }
 
         nav:nth-of-type(2) ul {
@@ -130,6 +139,7 @@
             align-items: center;
             gap: 20px;
             margin-left: auto;
+            flex-wrap: wrap;
         }
 
         .social-icons {
@@ -148,6 +158,32 @@
             transform: translateY(-3px) scale(1.15);
         }
 
+        /* Date/Time moved to second nav */
+        .datetime-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        #live-datetime {
+            background: rgba(99, 102, 241, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text);
+            font-family: monospace;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+
+        #live-datetime:hover {
+            background: rgba(99, 102, 241, 0.25);
+            transform: translateY(-2px);
+        }
+
         select {
             padding: 0.55rem 1rem;
             border-radius: var(--radius);
@@ -157,6 +193,7 @@
             background: var(--surface);
             color: var(--text);
             transition: var(--transition);
+            min-height: 44px;
         }
 
         select:hover {
@@ -204,6 +241,8 @@
             align-items: center;
             justify-content: center;
             padding: 0;
+            min-width: 44px;
+            min-height: 44px;
         }
 
         #themeChanger:hover {
@@ -225,32 +264,13 @@
             align-items: center;
             justify-content: center;
             font-size: 0.875rem;
+            min-height: 44px;
+            min-width: 44px;
         }
 
         .btn-plain:hover {
             border-color: var(--primary);
             color: var(--primary);
-        }
-
-        /* Mobile responsive adjustments */
-        @media (max-width: 768px) {
-            nav:first-of-type .nav-left {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            nav:first-of-type .logo {
-                height: 60px;
-            }
-
-            nav:first-of-type a {
-                font-size: 14px;
-            }
-
-            .logo-copy {
-                height: 180px;
-            }
         }
 
         /* Logo after second nav */
@@ -260,13 +280,6 @@
             max-width: 95%;
             width: auto;
             animation: float 3s ease-in-out infinite;
-        }
-
-        @media (max-width: 768px) {
-            .logo-copy {
-                height: 300px;
-                max-width: 90%;
-            }
         }
 
         /* NEWS IMAGES RESPONSIVE */
@@ -282,6 +295,270 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+
+        /* ==================== MOBILE RESPONSIVE FIXES ==================== */
+        
+        /* Tablet and below */
+        @media (max-width: 768px) {
+            /* First navigation - stacked layout */
+            nav:first-of-type {
+                padding: 12px 15px;
+                gap: 15px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            nav:first-of-type .nav-container {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            
+            nav:first-of-type .logo-container {
+                justify-content: center;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            nav:first-of-type .logo {
+                height: 85px !important; /* BIGGER ON MOBILE */
+                margin: 0;
+            }
+            
+            nav:first-of-type .nav-links {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            nav:first-of-type .nav-links a {
+                text-align: center;
+                padding: 8px 12px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            /* Second navigation - stacked */
+            nav:nth-of-type(2) {
+                padding: 15px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav:nth-of-type(2) ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+                order: 1;
+            }
+            
+            .social-lang-bar {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 10px;
+                order: 2;
+            }
+            
+            .datetime-container {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+                order: 3;
+                margin-top: 10px;
+            }
+            
+            #live-datetime {
+                width: 100%;
+                text-align: center;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+                max-width: 300px;
+            }
+            
+            .social-icons {
+                gap: 15px;
+                justify-content: center;
+                width: 100%;
+                order: 1;
+            }
+            
+            .social-icons a {
+                font-size: 1.4rem;
+            }
+            
+            #themeChanger, select {
+                order: 2;
+            }
+            
+            /* Logo and welcome section - stacked vertically */
+            body > div[style*="display:flex;align-items:center"] {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 15px;
+                margin-top: 10px;
+                gap: 25px;
+            }
+            
+            .logo-copy {
+                height: 200px !important;
+                max-width: 100% !important;
+            }
+            
+            body > div[style*="display:flex;align-items:center"] > div[style*="max-width:520px"] {
+                max-width: 100% !important;
+                padding: 0 10px;
+            }
+            
+            body > div[style*="display:flex;align-items:center"] h1 {
+                font-size: 1.6rem !important;
+                margin-bottom: 10px !important;
+            }
+            
+            body > div[style*="display:flex;align-items:center"] p {
+                font-size: 0.95rem !important;
+                line-height: 1.5 !important;
+            }
+            
+            /* Content area adjustments */
+            .content {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+            
+            /* Admin dashboard button - reposition */
+            a[href="{{ route('admin.dashboard') }}"] {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                margin: 10px auto !important;
+                display: block !important;
+                width: fit-content !important;
+                order: -1;
+            }
+            
+            /* Theme chooser modal */
+            #themeChooser > div[style*="max-width:320px"] {
+                max-width: 90% !important;
+                padding: 25px 20px !important;
+                margin: 20px;
+            }
+            
+            /* Footer */
+            footer {
+                padding: 25px 15px;
+                margin-top: 40px;
+                font-size: 0.9rem;
+            }
+            
+            /* Ensure images in content don't overflow */
+            .content img, .news-content img {
+                max-height: 50vh !important;
+                margin: 10px auto !important;
+            }
+        }
+
+        /* Extra small devices (phones) */
+        @media (max-width: 480px) {
+            nav:first-of-type .nav-links {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            nav:first-of-type .nav-links a {
+                font-size: 13px;
+                padding: 7px 8px;
+            }
+            
+            nav:first-of-type .logo {
+                height: 80px !important; /* BIGGER ON SMALL PHONES */
+            }
+            
+            .logo-copy {
+                height: 160px !important;
+            }
+            
+            body > div[style*="display:flex;align-items:center"] h1 {
+                font-size: 1.4rem !important;
+            }
+            
+            body > div[style*="display:flex;align-items:center"] p {
+                font-size: 0.9rem !important;
+            }
+            
+            .social-lang-bar {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .datetime-container {
+                order: 3;
+                margin-top: 15px;
+            }
+            
+            select {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            #themeChanger {
+                align-self: center;
+            }
+        }
+
+        /* Small tablets (portrait) */
+        @media (min-width: 481px) and (max-width: 768px) {
+            nav:first-of-type .nav-links {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .logo-copy {
+                height: 180px !important;
+            }
+            
+            nav:first-of-type .logo {
+                height: 90px !important; /* BIGGER ON TABLETS */
+            }
+        }
+
+        /* Landscape mode adjustments */
+        @media (max-height: 500px) and (orientation: landscape) {
+            nav:first-of-type {
+                padding: 8px 15px;
+            }
+            
+            nav:first-of-type .nav-links {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .logo-copy {
+                height: 120px !important;
+            }
+            
+            nav:first-of-type .logo {
+                height: 70px !important; /* Smaller in landscape */
+            }
+        }
+
+        /* Desktop adjustments for date/time positioning */
+        @media (min-width: 769px) {
+            .datetime-container {
+                margin-left: 20px;
+            }
+            
+            #live-datetime {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 
@@ -289,19 +566,23 @@
 
     <!-- First Nav with Big Logo -->
     <nav>
-        <div class="nav-left">
-            <a href="{{ route('home') }}">
+        <div class="nav-container">
+            <div class="logo-container">
                 <img src="{{ asset('images/tnm-logo.png') }}" class="logo" alt="TNM Logo">
-                📰 {{ __('messages.home') }}
-            </a>
-            <a href="{{ route('news.breaking') }}">🔴 {{ __('messages.breaking_news') }}</a>
-            <a href="{{ route('news.day') }}">📅 {{ __('messages.news_of_day') }}</a>
-            <a href="{{ route('news.week') }}">📆 {{ __('messages.news_of_week') }}</a>
-            <a href="{{ route('books.index') }}">📚 Books</a>
-            <a href="{{ route('about') }}">ℹ️ {{ __('messages.about') }}</a>
-            <a href="{{ route('contact') }}">📧 {{ __('messages.contact') }}</a>
+            </div>
+            
+          <div class="nav-links">
+    <a href="{{ route('home') }}">📰 {{ __('messages.home') }}</a>
+    <a href="{{ route('news.breaking') }}">🔴 {{ __('messages.breaking_news') }}</a>
+    <a href="{{ route('news.day') }}">📅 {{ __('messages.news_of_day') }}</a>
+    <a href="{{ route('news.week') }}">📆 {{ __('messages.news_of_week') }}</a>
+    <!-- Add this line -->
+    <a href="{{ route('events.index') }}">📅 Events</a>
+    <a href="{{ route('books.index') }}">📚 Books</a>
+    <a href="{{ route('about') }}">ℹ️ {{ __('messages.about') }}</a>
+    <a href="{{ route('contact') }}">📧 {{ __('messages.contact') }}</a>
+</div>
         </div>
-        <span id="live-datetime"></span>
     </nav>
 
     <!-- Second Nav -->
@@ -342,6 +623,10 @@
                 <option value="{{ route('lang.switch', 'ps') }}" {{ app()->getLocale() == 'ps' ? 'selected' : '' }}>پښتو</option>
                 <option value="{{ route('lang.switch', 'fa') }}" {{ app()->getLocale() == 'fa' ? 'selected' : '' }}>دری</option>
             </select>
+        </div>
+        
+        <div class="datetime-container">
+            <span id="live-datetime"></span>
         </div>
     </nav>
 

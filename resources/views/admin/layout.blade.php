@@ -303,17 +303,37 @@
         <h3>{{ __('messages.admin_panel') }}</h3>
         <a href="{{ route('admin.dashboard') }}">📊 {{ __('messages.dashboard') }}</a>
         <a href="{{ route('admin.users') }}">👥 {{ __('messages.manage_users') }}</a>
-        <a href="{{ route('admin.news.index', ['type' => 'breaking']) }}">🔴 {{ __('messages.breaking_news') }}</a>
-        <a href="{{ route('admin.news.index', ['type' => 'day']) }}">📅 {{ __('messages.news_of_day') }}</a>
-        <a href="{{ route('admin.news.index', ['type' => 'week']) }}">📆 {{ __('messages.news_of_week') }}</a>
+        
+        <!-- News Section -->
+        <div style="margin: 10px 0; padding: 5px 0; border-left: 3px solid var(--primary); padding-left: 10px;">
+            <strong style="color: var(--primary); display: block; margin-bottom: 5px;">📰 News</strong>
+            <a href="{{ route('admin.news.index', ['type' => 'breaking']) }}">🔴 {{ __('messages.breaking_news') }}</a>
+            <a href="{{ route('admin.news.index', ['type' => 'day']) }}">📅 {{ __('messages.news_of_day') }}</a>
+            <a href="{{ route('admin.news.index', ['type' => 'week']) }}">📆 {{ __('messages.news_of_week') }}</a>
+            <hr style="border-color: var(--border); margin: 10px 0;">
+            <a href="{{ route('admin.news.create', ['type' => 'breaking']) }}">➕ Add Breaking News</a>
+            <a href="{{ route('admin.news.create', ['type' => 'day']) }}">➕ Add News of Day</a>
+            <a href="{{ route('admin.news.create', ['type' => 'week']) }}">➕ Add News of Week</a>
+        </div>
+
+        <!-- Events Section - ADDED -->
+        <div style="margin: 10px 0; padding: 5px 0; border-left: 3px solid var(--secondary); padding-left: 10px;">
+            <strong style="color: var(--secondary); display: block; margin-bottom: 5px;">📅 Events</strong>
+            <a href="{{ route('admin.events.index') }}">📋 Manage Events</a>
+            <a href="{{ route('admin.events.create') }}">➕ Create New Event</a>
+        </div>
+
         <hr style="border-color: var(--border); margin: 15px 0;">
-        <a href="{{ route('admin.news.create', ['type' => 'breaking']) }}">➕ {{ __('messages.add_news') }}
-            ({{ __('messages.breaking') }})</a>
-        <a href="{{ route('admin.news.create', ['type' => 'day']) }}">➕ {{ __('messages.add_news') }}
-            ({{ __('messages.day') }})</a>
-        <a href="{{ route('admin.news.create', ['type' => 'week']) }}">➕ {{ __('messages.add_news') }}
-            ({{ __('messages.week') }})</a>
+        
+        <!-- Books Section (if you have it) -->
+        <!-- <div style="margin: 10px 0; padding: 5px 0; border-left: 3px solid var(--warning); padding-left: 10px;">
+            <strong style="color: var(--warning); display: block; margin-bottom: 5px;">📚 Books</strong>
+            <a href="#">📋 Manage Books</a>
+            <a href="#">➕ Add Book</a>
+        </div> -->
+        
         <hr style="border-color: var(--border); margin: 15px 0;">
+        
         <a href="{{ route('home') }}" style="color: var(--success);">👁️ {{ __('messages.view_site') }}</a>
     </div>
 
