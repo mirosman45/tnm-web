@@ -576,8 +576,7 @@
     <a href="{{ route('news.breaking') }}">🔴 {{ __('messages.breaking_news') }}</a>
     <a href="{{ route('news.day') }}">📅 {{ __('messages.news_of_day') }}</a>
     <a href="{{ route('news.week') }}">📆 {{ __('messages.news_of_week') }}</a>
-    <!-- Add this line -->
-    <a href="{{ route('events.index') }}">📅 Events</a>
+   <a href="{{ route('events.index') }}">🎉 Events</a>
     <a href="{{ route('books.index') }}">📚 Books</a>
     <a href="{{ route('about') }}">ℹ️ {{ __('messages.about') }}</a>
     <a href="{{ route('contact') }}">📧 {{ __('messages.contact') }}</a>

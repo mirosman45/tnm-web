@@ -2,43 +2,82 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Event extends Model
 {
-    // NO SoftDeletes trait
-    
+    use HasFactory;
+
+    // Fillable fields for mass assignment
     protected $fillable = [
-        'user_id',
         'title',
         'slug',
         'description',
-        'full_description',
-        'date',
-        'time',
+        'event_date',
         'location',
-        'venue',
-        'organizer',
-        'speakers',
-        'agenda',
-        'contact_email',
-        'contact_phone',
-        'website',
-        'image',
-        'views',
-        'status',
+        'status', // published/unpublished for admin toggle
     ];
 
+    // Cast event_date to Carbon instance automatically
     protected $casts = [
-        'date' => 'date',
-        'speakers' => 'array',
-        'agenda' => 'array',
-        'views' => 'integer',
+        'event_date' => 'datetime',
     ];
-    
-    // Add this method to fix route model binding
+
+    /**
+     * Boot method to automatically generate slug when creating an event
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($event) {
+            if (empty($event->slug)) {
+                $event->slug = Str::slug($event->title) . '-' . uniqid();
+            }
+        });
+    }
+
+    /**
+     * Use slug for route model binding
+     */
     public function getRouteKeyName()
     {
-        return 'id';
+        return 'slug';
+    }
+
+    /**
+     * Short description helper
+     */
+    public function shortDescription($limit = 120)
+    {
+        return Str::limit(strip_tags($this->description), $limit);
+    }
+
+    /**
+     * Check if event is upcoming
+     */
+    public function isUpcoming()
+    {
+        return $this->event_date && $this->event_date->isFuture();
+    }
+
+    /**
+     * Check if event is published
+     */
+    public function isPublished()
+    {
+        return $this->status === 'published';
+    }
+
+    /**
+     * Toggle event status (publish/unpublish)
+     */
+    public function toggleStatus()
+    {
+        $this->status = $this->status === 'published' ? 'draft' : 'published';
+        $this->save();
     }
 }

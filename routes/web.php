@@ -7,11 +7,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsViewController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\OtpController;
-use App\Http\Controllers\EventController;
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -35,12 +36,14 @@ Route::get('/news-of-the-week', [NewsViewController::class, 'week'])->name('news
 
 /*
 |--------------------------------------------------------------------------
-| EVENTS (PUBLIC)
+| EVENTS (PUBLIC — SLUG BASED)
 |--------------------------------------------------------------------------
 */
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
-Route::get('/events/past', [EventController::class, 'pastEvents'])->name('events.past');
+Route::prefix('events')->name('events.')->group(function () {
+    Route::get('/', [EventController::class, 'index'])->name('index');          // latest 4 events
+    Route::get('/past', [EventController::class, 'pastEvents'])->name('past');  // optional past events
+    Route::get('/{event:slug}', [EventController::class, 'show'])->name('show'); // event details by slug
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +54,7 @@ Route::get('/books', [BookController::class, 'index'])->name('books.index');
 
 /*
 |--------------------------------------------------------------------------
-| LANGUAGE SWITCH (single global route)
+| LANGUAGE SWITCH
 |--------------------------------------------------------------------------
 */
 Route::get('/lang/{locale}', function ($locale) {
@@ -64,14 +67,14 @@ Route::get('/lang/{locale}', function ($locale) {
 
 /*
 |--------------------------------------------------------------------------
-| AUTH ROUTES (Breeze / Auth)
+| AUTH ROUTES
 |--------------------------------------------------------------------------
 */
 require __DIR__ . '/auth.php';
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN ROUTES (PROTECTED)
+| ADMIN ROUTES (PROTECTED — SLUG BASED EVENTS)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', AdminMiddleware::class])
@@ -79,67 +82,76 @@ Route::middleware(['auth', AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
 
-        // Admin Dashboard
+        // Dashboard
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
         // Users Management
         Route::get('/users', [AdminController::class, 'users'])->name('users');
-        Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
-        Route::put('/users/{id}/toggle-status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
-        Route::put('/users/{id}/change-role', [AdminController::class, 'changeRole'])->name('users.changeRole');
+        Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
+        Route::put('/users/{user}/toggle-status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
+        Route::put('/users/{user}/change-role', [AdminController::class, 'changeRole'])->name('users.changeRole');
 
         // Books Management
-        Route::post('/books/store', [AdminController::class, 'storeBook'])->name('books.store');
-        Route::delete('/books/{id}', [AdminController::class, 'destroyBook'])->name('books.destroy');
+        Route::post('/books', [AdminController::class, 'storeBook'])->name('books.store');
+        Route::delete('/books/{book}', [AdminController::class, 'destroyBook'])->name('books.destroy');
 
         // News Management
         Route::prefix('news')->name('news.')->group(function () {
             Route::get('/{type}', [NewsController::class, 'index'])->name('index');
             Route::get('/{type}/create', [NewsController::class, 'create'])->name('create');
-            Route::post('/store', [NewsController::class, 'store'])->name('store');
-            Route::get('/edit/{id}', [NewsController::class, 'edit'])->name('edit');
-            Route::put('/update/{id}', [NewsController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}', [NewsController::class, 'destroy'])->name('destroy');
+            Route::post('/', [NewsController::class, 'store'])->name('store');
+            Route::get('/{news}/edit', [NewsController::class, 'edit'])->name('edit');
+            Route::put('/{news}', [NewsController::class, 'update'])->name('update');
+            Route::delete('/{news}', [NewsController::class, 'destroy'])->name('destroy');
         });
 
-        // Events Management - FIXED: Changed all {event} to {id}
+        // EVENTS Management (ADMIN — SLUG BASED)
         Route::prefix('events')->name('events.')->group(function () {
-            // Main routes - USING {id}
-            Route::get('/', [EventController::class, 'adminIndex'])->name('index');
-            Route::get('/create', [EventController::class, 'create'])->name('create');
-            Route::post('/', [EventController::class, 'store'])->name('store');
-            Route::get('/{id}/edit', [EventController::class, 'edit'])->name('edit'); // Changed to {id}
-            Route::put('/{id}', [EventController::class, 'update'])->name('update'); // Changed to {id}
-            Route::delete('/{id}', [EventController::class, 'destroy'])->name('destroy'); // Changed to {id}
-            
-            // Toggle status - USING {id}
-            Route::post('/{id}/toggle-status', [EventController::class, 'toggleStatus'])->name('toggle-status'); // Changed to {id}
+
+            // List all events
+            Route::get('/', [AdminEventController::class, 'index'])->name('index');
+
+            // Create new event
+            Route::get('/create', [AdminEventController::class, 'create'])->name('create');
+            Route::post('/', [AdminEventController::class, 'store'])->name('store');
+
+            // Edit existing event by slug
+            Route::get('/edit/{event:slug}', [AdminEventController::class, 'edit'])->name('edit');
+            Route::put('/update/{event:slug}', [AdminEventController::class, 'update'])->name('update');
+
+            // Delete event by slug
+            Route::delete('/delete/{event:slug}', [AdminEventController::class, 'destroy'])->name('destroy');
+
+            // Toggle event status (publish/unpublish) by slug
+            Route::patch('/toggle-status/{event:slug}', [AdminEventController::class, 'toggleStatus'])->name('toggle-status');
         });
     });
 
 /*
 |--------------------------------------------------------------------------
-| AUTHENTICATED USER ROUTES
+| AUTHENTICATED USER ROUTES (NORMAL USERS)
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
 
     // Comments
     Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
-    Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-    // Likes / Dislikes
+    // Likes
     Route::post('/news/{news}/like', [LikeController::class, 'toggle'])->name('news.like');
 
-    // Books - Download route (auth required)
+    // Books
     Route::get('/books/download/{book}', [BookController::class, 'download'])->name('books.download');
-    
-    // OTP Verification
+    Route::post('/books', [BookController::class, 'store'])->name('books.store');
+
+    // OTP (only for normal users)
     Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
     Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
-    
-    // Book creation (auth required)
-    Route::post('/books', [BookController::class, 'store'])->name('books.store');
+
+    // Events (User Actions — SLUG BASED)
+    Route::post('/events/{event:slug}/register', [EventController::class, 'register'])->name('events.register');
+    Route::post('/events/{event:slug}/save', [EventController::class, 'save'])->name('events.save');
 });
 
 /*

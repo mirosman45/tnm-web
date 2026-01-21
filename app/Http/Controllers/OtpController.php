@@ -24,18 +24,27 @@ class OtpController extends Controller
         // Validate input
         $request->validate([
             'email' => 'required|email',
-            'otp' => 'required|digits:6',
+            'otp' => 'nullable|digits:6', // OTP optional for admins
         ]);
 
-        // Find user by email + OTP + expiry
-        $user = User::where('email', $request->email)
-                    ->where('otp', $request->otp)
-                    ->where('otp_expires_at', '>=', now())
-                    ->first();
+        // Find user by email
+        $user = User::where('email', $request->email)->first();
 
-        // If no user found → invalid OTP
         if (!$user) {
-            return back()->with('error', 'Invalid OTP or expired.');
+            return back()->with('error', 'User not found.');
+        }
+
+        // Skip OTP verification for admins
+        if ($user->role !== 'admin') {
+            if (!$user->otp || $user->otp != $request->otp || $user->otp_expires_at < now()) {
+                return back()->with('error', 'Invalid OTP or expired.');
+            }
+
+            // Mark user as verified
+            $user->is_verified = true;
+            $user->otp = null;
+            $user->otp_expires_at = null;
+            $user->save();
         }
 
         // Check if user is blocked
@@ -43,21 +52,9 @@ class OtpController extends Controller
             return back()->with('error', 'Your account is blocked.');
         }
 
-        // Check if user is already verified (optional)
-        if ($user->is_verified) {
-            return redirect()->route('home')->with('success', 'Your email is already verified!');
-        }
-
-        // Mark user as verified
-        $user->is_verified = true;
-        $user->otp = null; // clear OTP
-        $user->otp_expires_at = null;
-        $user->save();
-
-        // Safely log in the user using web guard
+        // Safely log in the user
         Auth::guard('web')->login($user);
 
-        // Redirect to home
-        return redirect()->route('home')->with('success', 'Email verified successfully!');
+        return redirect()->route('home')->with('success', 'Logged in successfully!');
     }
 }
